@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import GameRecap from './GameRecap'; // adjust path if needed
 
-export default function GameSummaryPage() {
+export default function GameSummaryPage({activeTeam}) {
   const [summary, setSummary] = useState('');
   const [youtubeId, setYoutubeId] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -9,7 +9,7 @@ export default function GameSummaryPage() {
   useEffect(() => {
     const fetchGameSummary = async () => {
       try {
-        const res = await fetch('https://sports-api-o71j.onrender.com/game-summary?team=yankees');
+        const res = await fetch(`https://sports-api-o71j.onrender.com/game-summary?team=${activeTeam}`);
         const data = await res.json();
 
         if (data?.summary) {

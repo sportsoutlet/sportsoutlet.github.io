@@ -24,7 +24,7 @@ function App() {
     <div className='w-full'>
       {userInfo.name ?
         sport ? settingTeam ? <TeamSelect sport={sport} setSettingTeam={setSettingTeam} setTeams={setTeams} teams={teams} /> :
-          activeTeam ? <GameSummaryPage /> :
+          activeTeam ? <GameSummaryPage activeTeam={activeTeam} /> :
             <MySports teams={teams} setSettingTeam={setSettingTeam} setSport={setSport} setActiveTeam={setActiveTeam} /> :
           <SportSelect setSport={setSport} /> :
         <RegisterForm setInfo={setUserInfo} />
