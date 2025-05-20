@@ -50,7 +50,7 @@ export default function GameRecap({ text, youtubeId, delay = 50 }) {
   }, [index, allWords, delay, videoReached]);
 
   return (
-    <div className="max-w-full space-y-4">
+    <div className="max-w-full space-y-4 text-left">
       <p
         className="max-w-full"
         dangerouslySetInnerHTML={{ __html: htmlBefore }}
