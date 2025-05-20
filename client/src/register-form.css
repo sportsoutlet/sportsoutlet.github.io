@@ -1,5 +1,5 @@
 @reference "./index.css";
 
 .register-form{
-    @apply h-screen flex items-center px-2;
+    @apply h-screen min-h-screen max-h-screen flex items-center px-2;
 }

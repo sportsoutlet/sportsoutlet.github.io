@@ -5,69 +5,73 @@ export default function GameRecap({ text, youtubeId, name, delay = 50 }) {
   const [htmlBefore, setHtmlBefore] = useState('');
   const [htmlAfter, setHtmlAfter] = useState('');
   const [index, setIndex] = useState(0);
-  const [allWords, setAllWords] = useState([]);
+  const [allTokens, setAllTokens] = useState([]);
   const [videoReached, setVideoReached] = useState(false);
 
+  // HTML-aware tokenizer
+  const tokenizeHTMLString = (html) => {
+  return html
+    .replace('%user%', name)
+    .replace('%gamehighlight%', '%VIDEO%')
+    .split(/(%VIDEO%|<[^>]+>|\s+)/) // keep spaces
+    .filter(token => token !== null && token !== undefined);
+};
+
   useEffect(() => {
-    let words = [];
-
-    if (text.includes('%gamehighlight%') && youtubeId) {
-      const [before, after] = text.replace('%user%', name).split('%gamehighlight%');
-      words = [
-        ...before.trim().split(/\s+/),
-        '%VIDEO%',
-        ...after.trim().split(/\s+/),
-      ];
-    } else {
-      words = text.trim().split(/\s+/);
-    }
-
-    setAllWords(words);
+    const tokens = tokenizeHTMLString(text);
+    setAllTokens(tokens);
     setHtmlBefore('');
     setHtmlAfter('');
     setIndex(0);
     setVideoReached(false);
-  }, [text, youtubeId]);
+  }, [text, youtubeId, name]);
 
   useEffect(() => {
-    if (index >= allWords.length) return;
+    if (index >= allTokens.length) return;
 
     const timeout = setTimeout(() => {
-      const word = allWords[index];
-      if (word === '%VIDEO%') {
+      const token = allTokens[index];
+
+      if (token === '%VIDEO%') {
         setVideoReached(true);
-      } else {
-        const cleaned = word + ' ';
-        if (!videoReached) {
-          setHtmlBefore((prev) => prev + cleaned);
-        } else {
-          setHtmlAfter((prev) => prev + cleaned);
-        }
+        setIndex(prev => prev + 1); // skip rendering this token
+        return;
       }
-      setIndex((prev) => prev + 1);
+
+      if (!videoReached) {
+        setHtmlBefore(prev => prev + token);
+      } else {
+        setHtmlAfter(prev => prev + token);
+      }
+
+      setIndex(prev => prev + 1);
     }, delay);
 
     return () => clearTimeout(timeout);
-  }, [index, allWords, delay, videoReached]);
+  }, [index, allTokens, delay, videoReached]);
 
   return (
     <div className="max-w-full space-y-4 text-left response-wrapper">
-      <p
-        className="max-w-full"
-        dangerouslySetInnerHTML={{ __html: htmlBefore }}
-      />
+      {htmlBefore && (
+        <p
+          className="max-w-full"
+          dangerouslySetInnerHTML={{ __html: htmlBefore }}
+        />
+      )}
+
       {videoReached && youtubeId && (
         <div className="my-4">
           <iframe
             src={`https://www.youtube.com/embed/${youtubeId}`}
-            className='max-w-full my-7'
+            className="max-w-full my-7"
             title="Game Highlight"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-          ></iframe>
+          />
         </div>
       )}
+
       {htmlAfter && (
         <p
           className="max-w-full"
