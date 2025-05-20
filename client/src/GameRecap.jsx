@@ -1,34 +1,30 @@
 import { useEffect, useState } from 'react';
 
 export default function GameRecap({ fullText, youtubeId, delay = 50 }) {
-  const [displayedText, setDisplayedText] = useState('');
-  const [currentWords, setCurrentWords] = useState([]);
+  const [firstHalfText, setFirstHalfText] = useState('');
+  const [secondHalfText, setSecondHalfText] = useState('');
   const [index, setIndex] = useState(0);
-  const [shouldShowVideo, setShouldShowVideo] = useState(false);
-  const [videoInserted, setVideoInserted] = useState(false);
+  const [currentWords, setCurrentWords] = useState([]);
+  const [splitIndex, setSplitIndex] = useState(null);
+  const [phase, setPhase] = useState('first'); // 'first' → 'video' → 'second'
 
-  // Check if %gamehighlight% exists in the text
-  const hasPlaceholder = fullText.includes('%gamehighlight%');
-
-  // Preprocess text
   useEffect(() => {
-    let parts;
-    if (hasPlaceholder && youtubeId) {
-      parts = fullText.split('%gamehighlight%');
-      const words = [
-        ...parts[0].split(' '),
-        '%VIDEO%',
-        ...parts[1].split(' ')
-      ];
-      setCurrentWords(words);
+    let words;
+    if (fullText.includes('%gamehighlight%') && youtubeId) {
+      const [before, after] = fullText.split('%gamehighlight%');
+      const beforeWords = before.trim().split(' ');
+      const afterWords = after.trim().split(' ');
+      setCurrentWords([...beforeWords, '%VIDEO%', ...afterWords]);
+      setSplitIndex(beforeWords.length); // video goes here
     } else {
-      setCurrentWords(fullText.split(' ')); // no highlight, just display
+      words = fullText.split(' ');
+      setCurrentWords(words);
     }
 
-    setDisplayedText('');
+    setFirstHalfText('');
+    setSecondHalfText('');
     setIndex(0);
-    setShouldShowVideo(false);
-    setVideoInserted(false);
+    setPhase('first');
   }, [fullText, youtubeId]);
 
   useEffect(() => {
@@ -38,24 +34,29 @@ export default function GameRecap({ fullText, youtubeId, delay = 50 }) {
       const nextWord = currentWords[index];
 
       if (nextWord === '%VIDEO%') {
-        setShouldShowVideo(true);
-        setVideoInserted(true);
-        setIndex(i => i + 1); // skip the video tag
+        setPhase('video');
+        setIndex(i => i + 1);
         return;
       }
 
-      setDisplayedText(prev => (prev ? prev + ' ' + nextWord : nextWord));
+      if (phase === 'first') {
+        setFirstHalfText(prev => (prev ? `${prev} ${nextWord}` : nextWord));
+        if (index + 1 === splitIndex) setPhase('video'); // prep for video
+      } else if (phase === 'second') {
+        setSecondHalfText(prev => (prev ? `${prev} ${nextWord}` : nextWord));
+      }
+
       setIndex(i => i + 1);
     }, delay);
 
     return () => clearInterval(interval);
-  }, [index, currentWords]);
+  }, [index, currentWords, phase, splitIndex]);
 
   return (
     <div className="space-y-4">
-      <p dangerouslySetInnerHTML={{ __html: displayedText }}></p>
+      <div dangerouslySetInnerHTML={{ __html: firstHalfText }} />
 
-      {shouldShowVideo && youtubeId && (
+      {phase === 'video' && youtubeId && (
         <div className="aspect-video">
           <iframe
             width="100%"
@@ -67,6 +68,10 @@ export default function GameRecap({ fullText, youtubeId, delay = 50 }) {
             allowFullScreen
           />
         </div>
+      )}
+
+      {phase !== 'first' && (
+        <div dangerouslySetInnerHTML={{ __html: secondHalfText }} />
       )}
     </div>
   );
