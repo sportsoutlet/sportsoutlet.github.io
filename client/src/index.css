@@ -40,6 +40,14 @@ button {
   width: 100%;
 }
 
+@media (hover: none) {
+  button:hover {
+    background-color: inherit !important;
+    /* Reset other hover styles here */
+    box-shadow: none !important;
+  }
+}
+
 button:hover {
   background-color: #1d4ed8; /* blue-700 */
 }
