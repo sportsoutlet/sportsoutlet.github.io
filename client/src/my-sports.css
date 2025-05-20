@@ -4,7 +4,7 @@
     @apply w-[calc(50%-10px)] my-1 py-10 flex flex-col items-center relative justify-center;
 }
 
-.my-sports > button > button {
+.remove-item {
   @apply absolute top-0 right-2 text-white/70 hover:text-white hover:shadow-md transition-all 
     p-2 rounded-full max-w-fit border-0 ;
 }

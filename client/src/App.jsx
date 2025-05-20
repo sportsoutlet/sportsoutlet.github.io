@@ -6,39 +6,47 @@ import TeamSelect from './TeamSelect';
 import MySports from './MySports';
 import GameSummaryPage from './GameSummaryPage';
 
+// Utility to safely load from localStorage
+const safeLoad = (key, fallback) => {
+  const raw = localStorage.getItem(key);
+  if (!raw || raw === 'null' || raw === 'undefined') return fallback;
+
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return raw; // for string-only values like 'sport'
+  }
+};
+
 function App() {
-  // Load initial state from localStorage or default
-  const [userInfo, setUserInfo] = useState(() => {
-    const saved = localStorage.getItem('userInfo');
-    return saved ? JSON.parse(saved) : { name: '', age: '', gender: '', country: '' };
-  });
+  const [userInfo, setUserInfo] = useState(() =>
+    safeLoad('userInfo', { name: '', age: '', gender: '', country: '' })
+  );
 
-  const [sport, setSport] = useState(() => {
-    return localStorage.getItem('sport') || '';
-  });
+  const [sport, setSport] = useState(() =>
+    safeLoad('sport', '')
+  );
 
-  const [teams, setTeams] = useState(() => {
-    const saved = localStorage.getItem('teams');
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [teams, setTeams] = useState(() =>
+    safeLoad('teams', [])
+  );
 
-  const [settingTeam, setSettingTeam] = useState(() => {
-    const saved = localStorage.getItem('settingTeam');
-    return saved === 'false' ? false : true;
-  });
+  const [settingTeam, setSettingTeam] = useState(() =>
+    safeLoad('settingTeam', true)
+  );
 
-  const [activeTeam, setActiveTeam] = useState(() => {
-  const saved = localStorage.getItem('activeTeam');
-  return saved === 'null' || saved === null ? '' : saved;
-});
+  const [activeTeam, setActiveTeam] = useState(() =>
+    safeLoad('activeTeam', '')
+  );
 
-  // Sync each piece of state to localStorage on change
+  // Save to localStorage safely
   useEffect(() => {
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
   }, [userInfo]);
 
   useEffect(() => {
-    localStorage.setItem('sport', sport);
+    if (sport) localStorage.setItem('sport', sport);
+    else localStorage.removeItem('sport');
   }, [sport]);
 
   useEffect(() => {
@@ -46,15 +54,16 @@ function App() {
   }, [teams]);
 
   useEffect(() => {
-    localStorage.setItem('settingTeam', settingTeam);
+    localStorage.setItem('settingTeam', JSON.stringify(settingTeam));
   }, [settingTeam]);
 
   useEffect(() => {
-    localStorage.setItem('activeTeam', activeTeam);
+    if (activeTeam) localStorage.setItem('activeTeam', activeTeam);
+    else localStorage.removeItem('activeTeam');
   }, [activeTeam]);
 
   return (
-    <div className="w-[1280px]">
+    <div className="w-[1280px] relative">
       {userInfo.name ? (
         sport ? (
           settingTeam ? (
@@ -78,13 +87,15 @@ function App() {
               setSport={setSport}
               setActiveTeam={setActiveTeam}
               setTeams={setTeams}
+              userInfo={userInfo}
+              setUserInfo={setUserInfo}
             />
           )
         ) : (
           <SportSelect setSport={setSport} />
         )
       ) : (
-        <RegisterForm setInfo={setUserInfo} />
+        <RegisterForm setInfo={setUserInfo} info={userInfo} title='Register' />
       )}
     </div>
   );

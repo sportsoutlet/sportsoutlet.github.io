@@ -1,8 +1,9 @@
 import './my-sports.css'
 import { Plus, X } from 'lucide-react';
+import EditProfile from './EditProfile'
 
 
-function MySports({ teams, setSettingTeam, setSport, setActiveTeam, setTeams }) {
+function MySports({ teams, setSettingTeam, setSport, setActiveTeam, setTeams, userInfo, setUserInfo }) {
 
     function handleClick() {
         setSettingTeam(true);
@@ -15,14 +16,16 @@ function MySports({ teams, setSettingTeam, setSport, setActiveTeam, setTeams }) 
 
     return (
         <div className='my-sports-wrapper'>
-            <h1 className='pt-5'>Your Teams:</h1>
+            <h1 className='pt-10'>Your Teams:</h1>
+            <EditProfile userInfo={userInfo} setUserInfo={setUserInfo} />
             <div className='my-sports py-3'>
                 <button className='flex items-center justify-center' onClick={handleClick}><Plus /></button>
                 {teams.map((team, index) => (
                     <button key={team.team} onClick={() => setActiveTeam(team.team)}>
                         <span className='main text-lg font-bold pb-2'>{team.team}</span>
                         <span className='sub text-sm absolute bottom-3 left-1/2 -translate-x-1/2 font-thick'>{team.sport}</span>
-                        <button
+                        <span
+                        className='remove-item'
                             onClick={(e) => {
                                 e.stopPropagation();
                                 handleRemove(index);
@@ -30,7 +33,7 @@ function MySports({ teams, setSettingTeam, setSport, setActiveTeam, setTeams }) 
                             aria-label="Remove team"
                         >
                             <X size={18} />
-                        </button>
+                        </span>
                     </button>
                 ))}
             </div>

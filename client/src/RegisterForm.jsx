@@ -38,71 +38,88 @@ const countries = [
 
 
 
-function RegisterForm({ setInfo }) {
+function RegisterForm({ setInfo, info, children, onSubmit = () => {} }) {
 
+  function handleSubmit(e) {
+  e.preventDefault();
 
-    function handleSubmit(e) {
-        e.preventDefault();
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData.entries());
 
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData.entries());
-
-        setInfo(data); // ✅ only updates state on submit
-    }
-
-    return (
-        <div className="register-form">
-            <div className='common-form-wrapper'>
-                <h1>Register</h1>
-                <form className="common-form" onSubmit={handleSubmit}>
-                    <div className='common-element-wrapper'>
-                        <label htmlFor="name">Name:</label>
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            placeholder="Your name"
-                            required
-                        />
-                    </div>
-                    <div className='common-element-wrapper'>
-                        <label htmlFor="age">Age:</label>
-                        <input
-                            type="number"
-                            placeholder="Your age"
-                            id="age"
-                            name="age"
-                            min="0"
-                            max="130"
-                            required
-                        />
-                    </div>
-                    <div className='common-element-wrapper'>
-                        <label htmlFor="gender">Gender:</label>
-                        <select id="gender" name="gender" required>
-                            <option value="">Select gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
-                            <option value="prefer-not-to-say">Prefer not to say</option>
-                        </select>
-                    </div>
-                    <div className='common-element-wrapper'>
-                        <label htmlFor="country">Country:</label>
-                        <select id="country" name="country" required defaultValue="United States">
-                            {countries.map((country) => (
-                                <option key={country} value={country}>
-                                    {country}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-
-                    <button type="submit">Submit</button>
-                </form>
-            </div>
-        </div>
-    )
+  setInfo(data); // only updates state when submitted
+  onSubmit();
 }
+
+  return (
+    <div className="register-form">
+      <div className="common-form-wrapper relative">
+        {children}
+        <h1>Register</h1>
+        <form className="common-form" onSubmit={handleSubmit}>
+          <div className="common-element-wrapper">
+            <label htmlFor="name">Name:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              defaultValue={info.name}
+              placeholder="Your name"
+              required
+            />
+          </div>
+
+          <div className="common-element-wrapper">
+            <label htmlFor="age">Age:</label>
+            <input
+              type="number"
+              id="age"
+              name="age"
+              defaultValue={info.age}
+              placeholder="Your age"
+              min="0"
+              max="130"
+              required
+            />
+          </div>
+
+          <div className="common-element-wrapper">
+            <label htmlFor="gender">Gender:</label>
+            <select
+              id="gender"
+              name="gender"
+              defaultValue={info.gender}
+              required
+            >
+              <option value="">Select gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+              <option value="prefer-not-to-say">Prefer not to say</option>
+            </select>
+          </div>
+
+          <div className="common-element-wrapper">
+            <label htmlFor="country">Country:</label>
+            <select
+              id="country"
+              name="country"
+              defaultValue={info.country}
+              required
+            >
+              {countries.map((country) => (
+                <option key={country} value={country}>
+                  {country}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 
 export default RegisterForm;
