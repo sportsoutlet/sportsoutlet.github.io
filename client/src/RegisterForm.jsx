@@ -103,7 +103,7 @@ function RegisterForm({ setInfo, info, children, onSubmit = () => {} }) {
             <select
               id="country"
               name="country"
-              defaultValue={info.country}
+              defaultValue={info.country ? info.country : "United States"}
               required
             >
               {countries.map((country) => (
