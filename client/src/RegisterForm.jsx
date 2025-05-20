@@ -38,7 +38,7 @@ const countries = [
 
 
 
-function RegisterForm({ setInfo, info, children, onSubmit = () => {} }) {
+function RegisterForm({ setInfo, info, children, title, onSubmit = () => {} }) {
 
   function handleSubmit(e) {
   e.preventDefault();
@@ -54,7 +54,7 @@ function RegisterForm({ setInfo, info, children, onSubmit = () => {} }) {
     <div className="register-form">
       <div className="common-form-wrapper relative">
         {children}
-        <h1>Register</h1>
+        <h1>{title}</h1>
         <form className="common-form" onSubmit={handleSubmit}>
           <div className="common-element-wrapper">
             <label htmlFor="name">Name:</label>

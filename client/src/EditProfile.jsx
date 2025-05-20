@@ -31,9 +31,20 @@ export default function EditProfile({ userInfo, setUserInfo }) {
 
             {/* Modal */}
             {showModal && (
-                <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center">
-                    <div className="bg-neutral-900 rounded-xl p-6 w-[90%] max-w-md text-white relative animate-fade-in shadow-lg">
-                        <RegisterForm setInfo={setUserInfo} info={userInfo} title='Edit Profile' onSubmit={() => setShowModal(false)}>
+                <div
+                    className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center"
+                    onClick={() => setShowModal(false)} // ✅ clicking background closes modal
+                >
+                    <div
+                        className="bg-neutral-900 rounded-xl p-6 w-[90%] max-w-md text-white relative animate-fade-in shadow-lg"
+                        onClick={(e) => e.stopPropagation()} // 🛑 prevent click inside modal from closing it
+                    >
+                        <RegisterForm
+                            setInfo={setUserInfo}
+                            info={userInfo}
+                            title="Edit Profile"
+                            onSubmit={() => setShowModal(false)}
+                        >
                             <button
                                 className="absolute top-0 right-2 !p-3 text-white/60 hover:text-white max-w-fit"
                                 onClick={() => setShowModal(false)}
@@ -41,8 +52,6 @@ export default function EditProfile({ userInfo, setUserInfo }) {
                                 <X size={18} />
                             </button>
                         </RegisterForm>
-                        {/* Close Button */}
-
                     </div>
                 </div>
             )}

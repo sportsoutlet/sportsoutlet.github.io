@@ -5,8 +5,7 @@
 }
 
 .remove-item {
-  @apply absolute top-0 right-2 text-white/70 hover:text-white hover:shadow-md transition-all 
-    p-2 rounded-full max-w-fit border-0 ;
+  @apply absolute top-1 right-1 text-white/70 hover:text-white hover:bg-neutral-900 hover:shadow-md transition-all p-2 rounded-full max-w-fit border-0 ;
 }
 
 .my-sports > button > button:hover {
