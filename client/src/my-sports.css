@@ -1,7 +1,16 @@
 @reference "./index.css";
 
-.my-sports button {
-    @apply w-[calc(50%-10px)] my-1 py-10 flex flex-col;
+.my-sports > button {
+    @apply w-[calc(50%-10px)] my-1 py-10 flex flex-col relative;
+}
+
+.my-sports > button > button {
+  @apply absolute top-0 right-2 text-white/70 hover:text-white hover:shadow-md transition-all 
+    p-2 rounded-full max-w-fit border-0 ;
+}
+
+.my-sports > button > button:hover {
+    background-color: rgb(59, 59, 59);
 }
 
 .my-sports {
@@ -14,4 +23,8 @@
 
 .my-sports-wrapper h1 {
     @apply mt-0 mb-3;
+}
+
+#root {
+    overflow: auto;
 }
