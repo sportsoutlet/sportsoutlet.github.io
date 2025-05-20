@@ -63,7 +63,7 @@ export default function GameRecap({ text, youtubeId, name, delay = 50 }) {
         <div className="my-4">
           <iframe
             src={`https://www.youtube.com/embed/${youtubeId}`}
-            className="max-w-full my-7"
+            className="max-w-full my-7 mx-auto"
             title="Game Highlight"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

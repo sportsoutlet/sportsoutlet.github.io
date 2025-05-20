@@ -1,7 +1,7 @@
 @reference "./index.css";
 
 .my-sports > button {
-    @apply w-[calc(50%-10px)] my-1 py-10 flex flex-col relative;
+    @apply w-[calc(50%-10px)] my-1 py-10 flex flex-col items-center relative justify-center;
 }
 
 .my-sports > button > button {

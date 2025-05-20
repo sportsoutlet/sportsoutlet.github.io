@@ -21,7 +21,7 @@ function App() {
   const [activeTeam, setActiveTeam] = useState();
 
   return (
-    <div className='w-full'>
+    <div className='w-[1280px]'>
       {userInfo.name ?
         sport ? settingTeam ? <TeamSelect sport={sport} setSettingTeam={setSettingTeam} setTeams={setTeams} teams={teams} setSport={setSport} /> :
           activeTeam ? <GameSummaryPage activeTeam={activeTeam} name={userInfo.name} setActiveTeam={setActiveTeam} /> :
