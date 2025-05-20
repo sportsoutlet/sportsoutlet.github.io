@@ -208,7 +208,7 @@ ${chatGptData.nextGame === 'TBA'
 
 
     const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-      model: 'o4-mini',
+      model: 'gpt-4.1',
       messages: [
         { role: 'system', content: 'You are a professional sports journalist who writes detailed post-game recaps for any sport. Your summaries are factual, informative, and well-structured — suitable for publication on major sports news sites like ESPN, Bleacher Report, or The Athletic. Always write in full paragraphs with a polished, journalistic tone. Use <div></div> for line breaks if needed, and normal <strong> tags for bold. Avoid emojis, made up information, hashtags, or informal language.' },
         {
