@@ -53,7 +53,7 @@ export default function GameRecap({ fullText, youtubeId, delay = 50 }) {
 
   return (
     <div className="space-y-4">
-      <p>{displayedText}</p>
+      <p dangerouslySetInnerHTML={{ __html: displayedText }}></p>
 
       {shouldShowVideo && youtubeId && (
         <div className="aspect-video">
