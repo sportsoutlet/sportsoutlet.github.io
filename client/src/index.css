@@ -28,7 +28,7 @@ button {
 }
 
 .common-form-wrapper {
-  @apply w-full max-w-sm mx-auto mt-10 px-6 py-8 bg-neutral-900 rounded-xl shadow-md;
+  @apply w-full max-w-sm mx-auto mt-10 px-6 py-8 bg-neutral-900 rounded-xl shadow-md fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
 }
 
 
