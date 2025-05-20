@@ -12,9 +12,9 @@ export default function GameRecap({ text, youtubeId, name, delay = 50 }) {
     let words = [];
 
     if (text.includes('%gamehighlight%') && youtubeId) {
-      const [before, after] = text.split('%gamehighlight%');
+      const [before, after] = text.replace('%user%', name).split('%gamehighlight%');
       words = [
-        ...before.replace('%user%', name).trim().split(/\s+/),
+        ...before.trim().split(/\s+/),
         '%VIDEO%',
         ...after.trim().split(/\s+/),
       ];
@@ -60,7 +60,7 @@ export default function GameRecap({ text, youtubeId, name, delay = 50 }) {
         <div className="my-4">
           <iframe
             src={`https://www.youtube.com/embed/${youtubeId}`}
-            className='max-w-full'
+            className='max-w-full my-7'
             title="Game Highlight"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

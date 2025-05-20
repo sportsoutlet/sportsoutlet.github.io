@@ -21,7 +21,7 @@ function TeamSelect({ sport, setTeams, setSettingTeam, teams, setSport }) {
                         </button>
                     ))}
             </div>
-            <BackButton whenClicked={() => setSport(null)}/>
+            <BackButton className='absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-2 rounded-md bg-neutral-800 text-white hover:bg-neutral-700 transition-colors max-w-fit' whenClicked={() => setSport(null)}/>
         </div>
     )
 }
