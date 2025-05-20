@@ -135,8 +135,8 @@ app.get('/game-summary', async (req, res) => {
         awayTeam: lastGame.strAwayTeam,
         homeScore: lastGame.intHomeScore,
         awayScore: lastGame.intAwayScore,
-        date: lastGame.dateEventLocal,
-        time: lastGame.strTimeLocal,
+        date: lastGame.dateEvent,
+        time: lastGame.strTime,
         description: lastGame.strResult,
         venue: lastGame.strVenue,
         country: lastGame.strCountry,
@@ -150,8 +150,8 @@ app.get('/game-summary', async (req, res) => {
           season: nextGame.strSeason,
           homeTeam: nextGame.strHomeTeam,
           awayTeam: nextGame.strAwayTeam,
-          date: nextGame.dateEventLocal,
-          time: nextGame.strTimeLocal,
+          date: nextGame.dateEvent,
+          time: nextGame.strTime,
           venue: nextGame.strVenue,
           country: nextGame.strCountry
         } : 'TBA',
@@ -159,8 +159,14 @@ app.get('/game-summary', async (req, res) => {
     }
 
 
+    const now = new Date();
+    const utcDateTime = `${now.toISOString().slice(0, 10)} ${now.toISOString().slice(11, 19)} UTC`;
+
     const promptContent = `
+Current Date & Time (UTC): ${utcDateTime}
+
 Team: ${chatGptData.currentTeam}
+no 
 
 Previous Game:
 - Game Name: ${chatGptData.previousGame.gameName}
@@ -227,7 +233,7 @@ Maintain a professional tone. Do not include bullet points or formatting markers
 
 
     // ✅ Return it directly to the frontend
-    res.json({summary: response.data.choices[0].message.content, videoUrl: video});
+    res.json({ summary: response.data.choices[0].message.content, videoUrl: video });
 
   } catch (error) {
     console.error("❌ Error:", error.response?.data || error.message);
