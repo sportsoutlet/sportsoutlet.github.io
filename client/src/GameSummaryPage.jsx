@@ -39,7 +39,28 @@ export default function GameSummaryPage({ activeTeam }) {
         <div className='summary-wrapper'>
             <div className='summary'>
                 <h1>{activeTeam} Recap</h1>
-                {loading ? <p>Loading</p> :
+                {loading ? <div className='flex items-center'><svg
+                    className="animate-spin h-6 w-6 mr-3 text-yellow-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                >
+                    <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                    ></circle>
+                    <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    ></path>
+                </svg>
+                    <p className="text-md text-white opacity-75">Loading recap...</p>
+                </div> :
                     <GameRecap text={summary} youtubeId={youtubeId} />
                 }
             </div>
