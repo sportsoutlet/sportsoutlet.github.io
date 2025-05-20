@@ -19,9 +19,9 @@ function MySports({ teams, setSettingTeam, setSport, setActiveTeam, setTeams, us
             <h1 className='pt-10'>Your Teams:</h1>
             <EditProfile userInfo={userInfo} setUserInfo={setUserInfo} />
             <div className='my-sports py-3'>
-                <button className='flex items-center justify-center' onClick={handleClick}><Plus /></button>
+                <button className='flex items-center justify-center' onClick={(e) => {e.currentTarget.blur(); handleClick()}}><Plus /></button>
                 {teams.map((team, index) => (
-                    <button key={team.team} onClick={() => setActiveTeam(team.team)}>
+                    <button key={team.team} onClick={(e) => {e.currentTarget.blur(); setActiveTeam(team.team)}}>
                         <span className='main text-lg font-bold pb-2'>{team.team}</span>
                         <span className='sub text-sm absolute bottom-3 left-1/2 -translate-x-1/2 font-thick'>{team.sport}</span>
                         <span

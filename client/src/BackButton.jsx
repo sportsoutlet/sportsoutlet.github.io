@@ -3,7 +3,7 @@ import { ArrowLeft } from 'lucide-react';
 export default function BackButton({ whenClicked, className }) {
   return (
     <button
-      onClick={whenClicked}
+      onClick={(e) => {e.currentTarget.blur(); whenClicked}}
       className={className}
       aria-label="Go Back"
     >

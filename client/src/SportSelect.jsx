@@ -11,7 +11,7 @@ function SportSelect({ setSport }) {
             <div className='sport-form common-form-wrapper'>
                 <h1>Select your Sport</h1>
                 {sports.map((sport) => (
-                    <button key={sport.back} onClick={() => setSport(sport.back)}>{sport.front}</button>
+                    <button key={sport.back} onClick={(e) => {e.currentTarget.blur(); setSport(sport.back)}}>{sport.front}</button>
                 ))}
             </div>
         </div>

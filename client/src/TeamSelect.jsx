@@ -16,7 +16,7 @@ function TeamSelect({ sport, setTeams, setSettingTeam, teams, setSport }) {
                 {sports.find((s) => s.back === sport)?.teams
                     .filter((teamName) => !teams.some(t => t.team === teamName)) // ✅
                     .map((teamName) => (
-                        <button key={teamName} onClick={() => handleClick(teamName)}>
+                        <button key={teamName} onClick={(e) => {e.currentTarget.blur(); handleClick(teamName)}}>
                             {teamName}
                         </button>
                     ))}

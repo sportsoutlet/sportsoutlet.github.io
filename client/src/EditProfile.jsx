@@ -47,7 +47,7 @@ export default function EditProfile({ userInfo, setUserInfo }) {
                         >
                             <button
                                 className="absolute top-0 right-2 !p-3 text-white/60 hover:text-white max-w-fit"
-                                onClick={() => setShowModal(false)}
+                                onClick={(e) => {e.currentTarget.blur(); setShowModal(false)}}
                             >
                                 <X size={18} />
                             </button>

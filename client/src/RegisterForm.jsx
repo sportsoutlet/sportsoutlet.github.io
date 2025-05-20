@@ -114,7 +114,7 @@ function RegisterForm({ setInfo, info, children, title, onSubmit = () => {} }) {
             </select>
           </div>
 
-          <button type="submit">Submit</button>
+          <button onClick={(e) => {e.currentTarget.blur();}} type="submit">Submit</button>
         </form>
       </div>
     </div>
