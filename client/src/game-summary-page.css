@@ -9,9 +9,13 @@
 }
 
 .summary-wrapper h1 {
-    @apply mb-5 mt-0;
+    @apply mb-7 mt-0;
 }
 
 .summary-wrapper br {
     @apply h-15;
+}
+
+.response-wrapper div {
+    @apply min-h-2;
 }

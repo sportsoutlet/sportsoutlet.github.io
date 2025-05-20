@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import './game-summary-page.css';
 
 export default function GameRecap({ text, youtubeId, name, delay = 50 }) {
   const [htmlBefore, setHtmlBefore] = useState('');
@@ -13,7 +14,7 @@ export default function GameRecap({ text, youtubeId, name, delay = 50 }) {
     if (text.includes('%gamehighlight%') && youtubeId) {
       const [before, after] = text.split('%gamehighlight%');
       words = [
-        ...before.trim().split(/\s+/).replace('%user%', name),
+        ...before.replace('%user%', name).trim().split(/\s+/),
         '%VIDEO%',
         ...after.trim().split(/\s+/),
       ];
@@ -50,7 +51,7 @@ export default function GameRecap({ text, youtubeId, name, delay = 50 }) {
   }, [index, allWords, delay, videoReached]);
 
   return (
-    <div className="max-w-full space-y-4 text-left">
+    <div className="max-w-full space-y-4 text-left response-wrapper">
       <p
         className="max-w-full"
         dangerouslySetInnerHTML={{ __html: htmlBefore }}
