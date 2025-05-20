@@ -9,7 +9,7 @@ export default function GameSummaryPage({activeTeam}) {
   useEffect(() => {
     const fetchGameSummary = async () => {
       try {
-        const res = await fetch(`https://sports-api-o71j.onrender.com/game-summary?team=${activeTeam}`);
+        const res = await fetch(`https://sports-api-o71j.onrender.com/game-summary?team=${encodeURIComponent(activeTeam.replace(/\s+/g, '_'))}`);
         const data = await res.json();
 
         if (data?.summary) {
