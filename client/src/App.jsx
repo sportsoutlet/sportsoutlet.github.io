@@ -28,8 +28,9 @@ function App() {
   });
 
   const [activeTeam, setActiveTeam] = useState(() => {
-    return localStorage.getItem('activeTeam') || '';
-  });
+  const saved = localStorage.getItem('activeTeam');
+  return saved === 'null' || saved === null ? '' : saved;
+});
 
   // Sync each piece of state to localStorage on change
   useEffect(() => {
