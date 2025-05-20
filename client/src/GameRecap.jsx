@@ -1,77 +1,77 @@
 import { useEffect, useState } from 'react';
 
-export default function GameRecap({ fullText, youtubeId, delay = 50 }) {
-  const [firstHalfText, setFirstHalfText] = useState('');
-  const [secondHalfText, setSecondHalfText] = useState('');
+export default function GameRecap({ text, youtubeId, delay = 50 }) {
+  const [htmlBefore, setHtmlBefore] = useState('');
+  const [htmlAfter, setHtmlAfter] = useState('');
   const [index, setIndex] = useState(0);
-  const [currentWords, setCurrentWords] = useState([]);
-  const [splitIndex, setSplitIndex] = useState(null);
-  const [phase, setPhase] = useState('first'); // 'first' → 'video' → 'second'
+  const [allWords, setAllWords] = useState([]);
+  const [videoReached, setVideoReached] = useState(false);
 
   useEffect(() => {
-    let words;
-    if (fullText.includes('%gamehighlight%') && youtubeId) {
-      const [before, after] = fullText.split('%gamehighlight%');
-      const beforeWords = before.trim().split(' ');
-      const afterWords = after.trim().split(' ');
-      setCurrentWords([...beforeWords, '%VIDEO%', ...afterWords]);
-      setSplitIndex(beforeWords.length); // video goes here
+    let words = [];
+
+    if (text.includes('%gamehighlight%') && youtubeId) {
+      const [before, after] = text.split('<span data-highlight></span>');
+      words = [
+        ...before.trim().split(/\s+/),
+        '%VIDEO%',
+        ...after.trim().split(/\s+/),
+      ];
     } else {
-      words = fullText.split(' ');
-      setCurrentWords(words);
+      words = text.trim().split(/\s+/);
     }
 
-    setFirstHalfText('');
-    setSecondHalfText('');
+    setAllWords(words);
+    setHtmlBefore('');
+    setHtmlAfter('');
     setIndex(0);
-    setPhase('first');
-  }, [fullText, youtubeId]);
+    setVideoReached(false);
+  }, [text, youtubeId]);
 
   useEffect(() => {
-    if (index >= currentWords.length) return;
+    if (index >= allWords.length) return;
 
-    const interval = setInterval(() => {
-      const nextWord = currentWords[index];
-
-      if (nextWord === '%VIDEO%') {
-        setPhase('video');
-        setIndex(i => i + 1);
-        return;
+    const timeout = setTimeout(() => {
+      const word = allWords[index];
+      if (word === '%VIDEO%') {
+        setVideoReached(true);
+      } else {
+        const cleaned = word + ' ';
+        if (!videoReached) {
+          setHtmlBefore((prev) => prev + cleaned);
+        } else {
+          setHtmlAfter((prev) => prev + cleaned);
+        }
       }
-
-      if (phase === 'first') {
-        setFirstHalfText(prev => (prev ? `${prev} ${nextWord}` : nextWord));
-        if (index + 1 === splitIndex) setPhase('video'); // prep for video
-      } else if (phase === 'second') {
-        setSecondHalfText(prev => (prev ? `${prev} ${nextWord}` : nextWord));
-      }
-
-      setIndex(i => i + 1);
+      setIndex((prev) => prev + 1);
     }, delay);
 
-    return () => clearInterval(interval);
-  }, [index, currentWords, phase, splitIndex]);
+    return () => clearTimeout(timeout);
+  }, [index, allWords, delay, videoReached]);
 
   return (
-    <div className="space-y-4">
-      <div dangerouslySetInnerHTML={{ __html: firstHalfText }} />
-
-      {phase === 'video' && youtubeId && (
-        <div className="aspect-video">
+    <div className="max-w-full space-y-4">
+      <p
+        className="max-w-full"
+        dangerouslySetInnerHTML={{ __html: htmlBefore }}
+      />
+      {videoReached && youtubeId && (
+        <div className="my-4">
           <iframe
-            width="100%"
-            height="100%"
             src={`https://www.youtube.com/embed/${youtubeId}`}
+            className='max-w-full'
             title="Game Highlight"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-          />
+          ></iframe>
         </div>
       )}
-
-      {phase !== 'first' && (
-        <div dangerouslySetInnerHTML={{ __html: secondHalfText }} />
+      {htmlAfter && (
+        <p
+          className="max-w-full"
+          dangerouslySetInnerHTML={{ __html: htmlAfter }}
+        />
       )}
     </div>
   );

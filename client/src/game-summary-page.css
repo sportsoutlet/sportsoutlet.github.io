@@ -1,0 +1,13 @@
+@reference "./index.css";
+
+.summary {
+    @apply flex flex-col items-center bg-neutral-900 rounded-xl p-8 shadow-xl w-full max-w-sm mx-auto;
+}
+
+.summary-wrapper {
+    @apply h-screen flex items-center px-2;
+}
+
+.summary-wrapper h1 {
+    @apply mb-5 mt-0;
+}

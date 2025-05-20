@@ -19,6 +19,10 @@
   @apply w-full;
 }
 
+h1 {
+  @apply text-3xl font-bold text-white my-13 text-center;
+}
+
 button {
   @apply my-2 px-6 py-2 rounded-lg bg-neutral-800 text-white font-medium shadow hover:bg-blue-600 transition-colors duration-200 w-full;
 }
@@ -29,7 +33,7 @@ button {
 
 
 .common-form-wrapper h1 {
-  @apply text-4xl font-semibold text-white mb-6 text-center;
+  @apply text-4xl font-semibold text-white mb-6 mt-0 text-center;
 }
 
 .common-form {
@@ -75,7 +79,6 @@ body {
 }
 
 h1 {
-  font-size: 3.2em;
   line-height: 1.1;
 }
 

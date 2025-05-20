@@ -23,7 +23,7 @@ function App() {
   return (
     <div className='w-full'>
       {userInfo.name ?
-        sport ? settingTeam ? <TeamSelect sport={sport} setSettingTeam={setSettingTeam} setTeams={setTeams} teams={teams} /> :
+        sport ? settingTeam ? <TeamSelect sport={sport} setSettingTeam={setSettingTeam} setTeams={setTeams} teams={teams} setSport={setSport} /> :
           activeTeam ? <GameSummaryPage activeTeam={activeTeam} /> :
             <MySports teams={teams} setSettingTeam={setSettingTeam} setSport={setSport} setActiveTeam={setActiveTeam} /> :
           <SportSelect setSport={setSport} /> :

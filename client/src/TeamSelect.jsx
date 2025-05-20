@@ -1,7 +1,8 @@
 import { sports } from './sports.js'
 import './team-select.css'
+import BackButton from './BackButton.jsx'
 
-function TeamSelect({ sport, setTeams, setSettingTeam, teams }) {
+function TeamSelect({ sport, setTeams, setSettingTeam, teams, setSport }) {
 
     function handleClick(team) {
         setTeams((prev) => [...prev, { sport: sports.find((s) => s.back === sport)?.front, team: team }]);
@@ -20,6 +21,7 @@ function TeamSelect({ sport, setTeams, setSettingTeam, teams }) {
                         </button>
                     ))}
             </div>
+            <BackButton whenClicked={() => setSport(null)}/>
         </div>
     )
 }

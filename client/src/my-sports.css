@@ -13,5 +13,5 @@
 }
 
 .my-sports-wrapper h1 {
-    @apply mb-3;
+    @apply mt-0 mb-3;
 }
