@@ -213,7 +213,7 @@ ${chatGptData.nextGame === 'TBA'
           Instructions:
 Write a 2–3 paragraph game recap focused on the teams most recent game. Start with the final result and its significance. Do not make up any information. Use only the information provided. If context is provided (venue, playoff situation, date, time, etc.), work it naturally into the summary. End with a brief note on what’s next for the team if applicable (their next game or event).
 
-Maintain a professional tone. Do not include bullet points or formatting markers in the output. If there is a game highlight included, somewhere in the middle place the text: "<span data-highlight></span>", a youtube video will later be imbeded there, make sure it does not seperate text, be sure to have something to introduce the highlights as well, they will most likely be a compilation of videos, feel free to use br tags for bolding, or other html markup. 
+Maintain a professional tone. Do not include bullet points or formatting markers in the output. If there is a game highlight included, somewhere in the middle place the text: "%gamehighlight%", a youtube video will later be imbeded there, make sure it does not seperate text, be sure to have something to introduce the highlights as well, they will most likely be a compilation of videos, feel free to use br tags for bolding, or other html markup. 
 
           ` }
       ]

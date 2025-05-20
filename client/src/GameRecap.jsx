@@ -11,7 +11,7 @@ export default function GameRecap({ text, youtubeId, delay = 50 }) {
     let words = [];
 
     if (text.includes('%gamehighlight%') && youtubeId) {
-      const [before, after] = text.split('<span data-highlight></span>');
+      const [before, after] = text.split('%gamehighlight%');
       words = [
         ...before.trim().split(/\s+/),
         '%VIDEO%',
