@@ -62,6 +62,20 @@ function App() {
     else localStorage.removeItem('activeTeam');
   }, [activeTeam]);
 
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.target.tagName === 'BUTTON') {
+        e.target.blur();
+      }
+    };
+    document.addEventListener('touchend', handler);
+
+    return () => {
+      document.removeEventListener('touchend', handler);
+    };
+  }, []);
+
   return (
     <div className="w-[1280px] relative">
       {userInfo.name ? (
