@@ -70,7 +70,6 @@ button {
 
 button:hover {
   background-color: #1d4ed8 !important; /* blue-700 */
-  border-color: #646cff;
 }
 @media (hover: none) and (pointer: coarse) {
   button:focus {
