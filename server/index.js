@@ -53,6 +53,7 @@ app.get('/game-summary', async (req, res) => {
 
     const prevEventsRes = await axios.get(`https://www.thesportsdb.com/api/v1/json/${process.env.SPORTSDB_API}/eventslast.php?id=${teamId}`);
     const lastGame = prevEventsRes.data.results?.[0];
+    const video = lastGame.strVideo || null;
 
     const sport = lastGame.strSport;
     const league = lastGame.idLeague;
@@ -226,7 +227,7 @@ Maintain a professional tone. Do not include bullet points or formatting markers
 
 
     // ✅ Return it directly to the frontend
-    res.json([chatGptData, promptContent, response.data.choices[0].message.content]);
+    res.json({summary: response.data.choices[0].message.content, videoUrl: video});
 
   } catch (error) {
     console.error("❌ Error:", error.response?.data || error.message);
