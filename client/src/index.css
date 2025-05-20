@@ -24,12 +24,6 @@ h1 {
 }
 
 button {
-  @apply focus:outline-none 
-    focus:ring-0 
-    active:bg-transparent 
-    focus:bg-transparent 
-    outline-none 
-    shadow-none;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   padding-left: 1.5rem;
@@ -44,11 +38,37 @@ button {
   transition-property: background-color;
   transition-duration: 200ms;
   width: 100%;
+  outline: none !important;
+  box-shadow: none !important;
+
+  /* Disable tap highlight on iOS */
+  -webkit-tap-highlight-color: transparent !important;
+
+  /* Disable default appearance (for iOS) */
+  appearance: none !important;
+
+  /* Remove focus ring */
+  --tw-ring-shadow: none !important;
+
+  /* Smooth interaction */
+  transition: all 0.15s ease-in-out !important;
+  border: none !important;
+}
+
+button:focus,
+button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: #262626 !important;
+}
+
+button:active {
+  background-color: #262626 !important; /* or use rgba(255,255,255,0.1) if you want feedback */
 }
 
 @media (hover: none) {
   button:hover {
-    background-color: inherit !important;
+    background-color: #262626 !important;
     /* Reset other hover styles here */
     box-shadow: none !important;
   }
