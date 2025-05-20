@@ -1,7 +1,7 @@
 @reference "./index.css";
 
 .sport-form-wrapper {
-    @apply h-screen flex items-center;
+    @apply h-screen flex items-center px-2;
 }
 /* Wrapper for the form */
 .sport-form {

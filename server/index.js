@@ -8,7 +8,7 @@ const allowedOrigin = 'https://sportsoutlet.github.io';
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (origin === allowedOrigin) {
+    if (origin === allowedOrigin || 'http://localhost:3000') {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
