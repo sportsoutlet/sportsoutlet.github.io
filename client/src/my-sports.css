@@ -1,0 +1,17 @@
+@reference "./index.css";
+
+.my-sports button {
+    @apply w-[calc(50%-10px)] my-1 py-10 flex flex-col;
+}
+
+.my-sports {
+    @apply flex flex-wrap justify-around;
+}
+
+.my-sports-wrapper {
+    @apply p-6;
+}
+
+.my-sports-wrapper h1 {
+    @apply mb-3;
+}

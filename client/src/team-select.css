@@ -1,0 +1,17 @@
+@reference "./index.css";
+
+.team-select-wrapper h1 {
+    @apply mb-3;
+}
+
+.team-select {
+    @apply flex flex-wrap justify-around;
+}
+
+.team-select button {
+    @apply w-[calc(50%-10px)] my-1;
+}
+
+.team-select-wrapper {
+    @apply p-6;
+}

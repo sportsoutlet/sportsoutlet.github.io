@@ -1,0 +1,14 @@
+@reference "./index.css";
+
+.sport-form-wrapper {
+    @apply h-screen flex items-center;
+}
+/* Wrapper for the form */
+.sport-form {
+  @apply flex flex-col items-center bg-neutral-900 rounded-xl p-8 shadow-xl w-full max-w-sm mx-auto;
+}
+
+/* Title (can apply separately in JSX too) */
+.sport-form h1 {
+  @apply text-3xl font-bold text-white mb-6 text-center;
+}
