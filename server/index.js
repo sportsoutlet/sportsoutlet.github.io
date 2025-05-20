@@ -3,9 +3,19 @@ const axios = require('axios');
 const cors = require('cors');
 require('dotenv').config();
 
-const app = express(); // ✅ THIS LINE is what you're missing!
+const app = express();
+const allowedOrigin = 'https://sportsoutlet.io';
 
-app.use(cors());
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || origin === allowedOrigin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
+
 app.use(express.json());
 
 function espnLink(sport) {
