@@ -1,0 +1,19 @@
+# Node modules (both frontend and backend)
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Local environment variables
+.env
+server/.env
+
+# Vite/React build output
+dist/
+client/dist/
+
+# Logs and temp files
+*.log
+.DS_Store
+
+# GitHub Pages build (if using gh-pages branch)
+gh-pages/
