@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import GameRecap from './GameRecap'; // adjust path if needed
 import './game-summary-page.css';
 
-export default function GameSummaryPage({ activeTeam }) {
+export default function GameSummaryPage({ activeTeam, name }) {
     const [summary, setSummary] = useState('');
     const [youtubeId, setYoutubeId] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -61,7 +61,7 @@ export default function GameSummaryPage({ activeTeam }) {
                 </svg>
                     <p className="text-md text-white opacity-75">Loading recap...</p>
                 </div> :
-                    <GameRecap text={summary} youtubeId={youtubeId} />
+                    <GameRecap text={summary} youtubeId={youtubeId} name={name} />
                 }
             </div>
         </div>);

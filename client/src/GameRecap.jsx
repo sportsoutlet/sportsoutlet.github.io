@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function GameRecap({ text, youtubeId, delay = 50 }) {
+export default function GameRecap({ text, youtubeId, name, delay = 50 }) {
   const [htmlBefore, setHtmlBefore] = useState('');
   const [htmlAfter, setHtmlAfter] = useState('');
   const [index, setIndex] = useState(0);
@@ -13,7 +13,7 @@ export default function GameRecap({ text, youtubeId, delay = 50 }) {
     if (text.includes('%gamehighlight%') && youtubeId) {
       const [before, after] = text.split('%gamehighlight%');
       words = [
-        ...before.trim().split(/\s+/),
+        ...before.trim().split(/\s+/).replace('%user%', name),
         '%VIDEO%',
         ...after.trim().split(/\s+/),
       ];
