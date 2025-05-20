@@ -1,6 +1,6 @@
 import './my-sports.css'
 
-function MySports({teams, setSettingTeam, setSport}){
+function MySports({teams, setSettingTeam, setSport, setActiveTeam}){
 
     function handleClick(){
         setSettingTeam(true);
@@ -13,7 +13,7 @@ function MySports({teams, setSettingTeam, setSport}){
         <div className='my-sports'>
             <button onClick={handleClick}>+</button>
             {teams.map((team) => (
-                <button key={team.team}>
+                <button key={team.team} onClick={() => setActiveTeam(team.team)}>
                     <span className='main'>{team.team}</span>
                     <span className='sub'>{team.sport}</span>
                     </button>
