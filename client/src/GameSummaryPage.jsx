@@ -4,6 +4,7 @@ import './game-summary-page.css';
 import BackButton from './BackButton';
 
 
+
 function extractTaggedSections(str) {
   const regex = /%=(.*?)=%/g;
   const matches = [];
