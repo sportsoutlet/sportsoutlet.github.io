@@ -28,3 +28,15 @@
 .video-container {
   @apply absolute top-0 left-0 w-full h-full;
 }
+
+.affiliates a {
+    @apply mx-2;
+}
+
+.affiliates {
+    @apply w-full flex justify-center items-center;
+}
+
+.banner-ad {
+    @apply w-full h-10 bg-red-500 flex items-center justify-center font-bold;
+}

@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import './game-summary-page.css';
 
+
+
 export default function GameRecap({ text, youtubeId, name }) {
   const playerRef = useRef(null);
   const iframeContainerRef = useRef(null);
@@ -91,6 +93,7 @@ export default function GameRecap({ text, youtubeId, name }) {
           </a>
         )}
       </div>
+      <div className='banner-ad'>Banner Advertizement</div>
 
       {parts.after && (
         <p
@@ -98,6 +101,11 @@ export default function GameRecap({ text, youtubeId, name }) {
           dangerouslySetInnerHTML={{ __html: parts.after }}
         />
       )}
+      <div className='affiliates'>
+        <a>Affiliate 1</a>
+        <a>Affiliate 2</a>
+        <a>Affiliate 3</a>
+      </div>
     </div>
   );
 }

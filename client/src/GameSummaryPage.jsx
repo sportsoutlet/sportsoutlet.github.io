@@ -3,10 +3,29 @@ import GameRecap from './GameRecap'; // adjust path if needed
 import './game-summary-page.css';
 import BackButton from './BackButton';
 
+
+function extractTaggedSections(str) {
+  const regex = /%=(.*?)=%/g;
+  const matches = [];
+  let cleaned = str;
+
+  let match;
+  while ((match = regex.exec(str)) !== null) {
+    matches.push(match[1]); // only the inside content
+  }
+
+  // Optionally, remove the tags from the original string
+  cleaned = cleaned.replace(regex, '').trim();
+
+  return { matches, cleaned };
+}
+
+
 export default function GameSummaryPage({ activeTeam, name, setActiveTeam }) {
     const [summary, setSummary] = useState('');
     const [youtubeId, setYoutubeId] = useState();
     const [loading, setLoading] = useState(true);
+    const [title, setTitle] = useState('');
 
     useEffect(() => {
         const fetchGameSummary = async () => {
@@ -15,7 +34,9 @@ export default function GameSummaryPage({ activeTeam, name, setActiveTeam }) {
                 const data = await res.json();
 
                 if (data?.summary) {
-                    setSummary(data.summary);
+                    const result = extractTaggedSections(data.summary);
+                    setTitle(result.matches[0] || 'Game Recap');
+                    setSummary(result.cleaned || 'No summary available.');
                     console.log(data.summary);
 
                     // 🔍 Extract YouTube ID if link is known (optional)

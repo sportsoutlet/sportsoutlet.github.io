@@ -35,9 +35,7 @@ function App() {
     safeLoad('settingTeam', true)
   );
 
-  const [activeTeam, setActiveTeam] = useState(() =>
-    safeLoad('activeTeam', '')
-  );
+  const [activeTeam, setActiveTeam] = useState();
 
   // Save to localStorage safely
   useEffect(() => {
@@ -57,10 +55,6 @@ function App() {
     localStorage.setItem('settingTeam', JSON.stringify(settingTeam));
   }, [settingTeam]);
 
-  useEffect(() => {
-    if (activeTeam) localStorage.setItem('activeTeam', activeTeam);
-    else localStorage.removeItem('activeTeam');
-  }, [activeTeam]);
 
   return (
     <div className="w-[1280px] relative">

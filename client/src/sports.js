@@ -72,7 +72,7 @@ export const sports = [
     teams: [
       'Red Bull Racing', 'Mercedes', 'Ferrari', 'McLaren',
       'Aston Martin', 'Alpine', 'Williams', 'Haas',
-      'Racing Bulls', 'Kick Sauber'
+      'Visa Cash App RB', 'Kick Sauber'
     ]
   }
 ];
