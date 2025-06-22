@@ -11,12 +11,20 @@ export default function GameRecap({ text, youtubeId, name }) {
   const [parts, setParts] = useState({ before: '', after: '' });
 
   useEffect(() => {
-    const processed = text
-      .replace('%user%', name)
-      .split('%gamehighlight%');
+    const highlightWithPeriod = '%gamehighlight%.';
+    const highlight = '%gamehighlight%';
+
+    let processed;
+
+    if (text.includes(highlightWithPeriod)) {
+      processed = text.replace('%user%', name).split(highlightWithPeriod);
+    } else {
+      processed = text.replace('%user%', name).split(highlight);
+    }
 
     setParts({ before: processed[0], after: processed[1] || '' });
   }, [text, name]);
+  
 
   useEffect(() => {
     if (!youtubeId || !iframeContainerRef.current) return;
@@ -43,7 +51,7 @@ export default function GameRecap({ text, youtubeId, name }) {
         width: '100%',
         playerVars: { rel: 0 },
         events: {
-          onReady: () => {},
+          onReady: () => { },
           onError: (event) => {
             setVideoErrorCode(event.data);
             setVideoFailed(true);
