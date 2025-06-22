@@ -62,7 +62,7 @@ export default function GameSummaryPage({ activeTeam, name, setActiveTeam }) {
         <div className='summary-wrapper mt-12'>
             <div className='summary'>
                 <BackButton className='absolute top-1 left-4 inline-flex items-center gap-2 px-3 py-2 rounded-md bg-neutral-800 text-white hover:bg-neutral-700 transition-colors max-w-fit' whenClicked={() => setActiveTeam()}/>
-                <h1>{activeTeam} Recap</h1>
+                <h1>{title ? title: activeTeam + ' Recap'}</h1>
                 {loading ? <div className='flex items-center'><svg
                     className="animate-spin h-6 w-6 mr-3 text-yellow-400"
                     xmlns="http://www.w3.org/2000/svg"
