@@ -1,5 +1,0 @@
-@reference "./index.css";
-
-.register-form{
-    @apply px-2;
-}
