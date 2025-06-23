@@ -83,6 +83,7 @@ function App() {
               <TeamInfo 
               setDisplaySummary={setDisplaySummary}
               setActiveTeam={setActiveTeam}
+              activeTeam={activeTeam}
               />
             )
           ) : (
