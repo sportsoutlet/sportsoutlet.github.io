@@ -22,7 +22,7 @@ function extractTaggedSections(str) {
 }
 
 
-export default function GameSummaryPage({ activeTeam, name, setActiveTeam }) {
+export default function GameSummaryPage({ activeTeam, name, setDisplaySummary }) {
     const [summary, setSummary] = useState('');
     const [youtubeId, setYoutubeId] = useState();
     const [loading, setLoading] = useState(true);
@@ -61,7 +61,7 @@ export default function GameSummaryPage({ activeTeam, name, setActiveTeam }) {
     return (
         <div className='summary-wrapper mt-12'>
             <div className='summary'>
-                <BackButton className='absolute top-1 left-4 inline-flex items-center gap-2 px-3 py-2 rounded-md bg-neutral-800 text-white hover:bg-neutral-700 transition-colors max-w-fit' whenClicked={() => setActiveTeam()}/>
+                <BackButton className='absolute top-1 left-4 inline-flex items-center gap-2 px-3 py-2 rounded-md bg-neutral-800 text-white hover:bg-neutral-700 transition-colors max-w-fit' whenClicked={() => setDisplaySummary(false)}/>
                 <h1>{title ? title: activeTeam + ' Recap'}</h1>
                 {loading ? <div className='flex items-center'><svg
                     className="animate-spin h-6 w-6 mr-3 text-yellow-400"

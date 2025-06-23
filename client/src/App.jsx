@@ -5,6 +5,7 @@ import SportSelect from './SportSelect';
 import TeamSelect from './TeamSelect';
 import MySports from './MySports';
 import GameSummaryPage from './GameSummaryPage';
+import TeamInfo from './TeamInfo';
 
 // Utility to safely load from localStorage
 const safeLoad = (key, fallback) => {
@@ -36,6 +37,8 @@ function App() {
   );
 
   const [activeTeam, setActiveTeam] = useState();
+
+  const [displaySummary, setDisplaySummary] = useState(false);
 
   // Save to localStorage safely
   useEffect(() => {
@@ -69,11 +72,19 @@ function App() {
               setSport={setSport}
             />
           ) : activeTeam ? (
-            <GameSummaryPage
-              activeTeam={activeTeam}
-              name={userInfo.name}
+            displaySummary ? (
+              <GameSummaryPage
+                activeTeam={activeTeam}
+                name={userInfo.name}
+                setActiveTeam={setActiveTeam}
+                setDisplaySummary={setDisplaySummary}
+              />
+            ) : (
+              <TeamInfo 
+              setDisplaySummary={setDisplaySummary}
               setActiveTeam={setActiveTeam}
-            />
+              />
+            )
           ) : (
             <MySports
               teams={teams}
