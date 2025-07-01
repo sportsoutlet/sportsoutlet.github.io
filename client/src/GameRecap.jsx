@@ -101,7 +101,7 @@ export default function GameRecap({ text, youtubeId, name }) {
           </a>
         )}
       </div>
-      <div className='banner-ad'>Banner Advertizement</div>
+      <div className='banner-ad'>Advertisement Placeholder</div>
 
       {parts.after && (
         <p
@@ -110,9 +110,9 @@ export default function GameRecap({ text, youtubeId, name }) {
         />
       )}
       <div className='affiliates'>
-        <a>Affiliate 1</a>
-        <a>Affiliate 2</a>
-        <a>Affiliate 3</a>
+        <a>Potential Affiliate Link 1</a>
+        <a>Potential Affiliate Link 2</a>
+        <a>Potential Affiliate Link 3</a>
       </div>
     </div>
   );
