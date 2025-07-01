@@ -110,9 +110,9 @@ export default function GameRecap({ text, youtubeId, name }) {
         />
       )}
       <div className='affiliates'>
-        <a>Potential Affiliate Link 1</a>
-        <a>Potential Affiliate Link 2</a>
-        <a>Potential Affiliate Link 3</a>
+        <a>Potential Merchandise Affiliate Link</a>
+        <a>Potential Event Ticket Affiliate Link</a>
+        <a>Potential Estate Betting House Link</a>
       </div>
     </div>
   );
