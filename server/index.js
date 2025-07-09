@@ -4,7 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-const allowedOrigin = 'https://sportsoutlet.github.io';
+const allowedOrigin = 'https://gaboai.com';
 
 app.use(cors({
   origin: function (origin, callback) {
