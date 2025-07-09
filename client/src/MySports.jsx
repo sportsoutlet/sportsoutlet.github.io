@@ -24,7 +24,7 @@ function MySports({ teams, setSettingTeam, setSport, setActiveTeam, setTeams, us
                     <button key={team.team} onClick={(e) => {e.currentTarget.blur(); setActiveTeam(team.team)}}>
                         <span className='main text-lg font-bold pb-2'>{team.team}</span>
                         <span className='sub text-sm font-thick absolute left-3 top-3'>{team.sport}</span>
-                        <span className='text-sm font-thin absolute bottom-2 opacity-80'>View Game Recap</span>
+                        <span className='text-sm font-thin absolute bottom-2 opacity-80'>Click here for more information</span>
                         <span
                         className='remove-item'
                             onClick={(e) => {

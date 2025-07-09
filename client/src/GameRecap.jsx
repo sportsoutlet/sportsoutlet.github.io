@@ -78,7 +78,7 @@ export default function GameRecap({ text, youtubeId, name }) {
 
       <div className="my-4 text-center">
         {!videoFailed ? (
-          <div className="relative w-full pb-[56.25%] mx-auto my-7">
+          <div className="relative w-full pb-[56.25%] mx-auto my-7 video-container-outer">
             <div className="video-container" ref={iframeContainerRef} />
           </div>
         ) : videoErrorCode === 101 || videoErrorCode === 150 ? (

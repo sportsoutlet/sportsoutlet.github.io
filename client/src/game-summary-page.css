@@ -31,7 +31,7 @@
 }
 
 .affiliates a {
-    @apply mx-2 cursor-pointer border-black border-1;
+    @apply m-1 cursor-pointer border-white border-1 p-1;
 }
 
 .affiliates {
@@ -40,4 +40,8 @@
 
 .banner-ad {
     @apply w-full h-10 bg-red-500 flex items-center justify-center font-bold cursor-pointer;
+}
+
+.video-container-outer, video-container:empty {
+    @apply hidden;
 }
