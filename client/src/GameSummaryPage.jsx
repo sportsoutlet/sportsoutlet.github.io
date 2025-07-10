@@ -27,6 +27,7 @@ export default function GameSummaryPage({ activeTeam, name, setDisplaySummary })
     const [youtubeId, setYoutubeId] = useState();
     const [loading, setLoading] = useState(true);
     const [title, setTitle] = useState('');
+    const [summaryStatus, setSummaryStatus] = useState(false);
 
     useEffect(() => {
         const fetchGameSummary = async () => {
@@ -38,6 +39,7 @@ export default function GameSummaryPage({ activeTeam, name, setDisplaySummary })
                     const result = extractTaggedSections(data.summary);
                     setTitle(result.matches[0] || 'Game Recap');
                     setSummary(result.cleaned || 'No summary available.');
+                    setSummaryStatus(true);
                     console.log(data.summary);
 
                     // 🔍 Extract YouTube ID if link is known (optional)
@@ -85,7 +87,7 @@ export default function GameSummaryPage({ activeTeam, name, setDisplaySummary })
                 </svg>
                     <p className="text-md text-white opacity-75">Loading recap...</p>
                 </div> :
-                    <GameRecap text={summary} youtubeId={youtubeId} name={name} />
+                    <GameRecap text={summary} youtubeId={youtubeId} name={name} summaryStatus={summaryStatus} />
                 }
             </div>
         </div>);

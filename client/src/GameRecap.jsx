@@ -3,7 +3,7 @@ import './game-summary-page.css';
 
 
 
-export default function GameRecap({ text, youtubeId, name }) {
+export default function GameRecap({ text, youtubeId, name, summaryStatus }) {
   const playerRef = useRef(null);
   const iframeContainerRef = useRef(null);
   const [videoFailed, setVideoFailed] = useState(false);
@@ -77,7 +77,7 @@ export default function GameRecap({ text, youtubeId, name }) {
       )}
 
       <div className="my-4 text-center">
-        {!videoFailed ? (
+        {!videoFailed && summaryStatus ? (
           <div className="relative w-full pb-[56.25%] mx-auto my-7 video-container-outer">
             <div className="video-container" ref={iframeContainerRef} />
           </div>
@@ -91,6 +91,7 @@ export default function GameRecap({ text, youtubeId, name }) {
             ▶ Watch on YouTube
           </a>
         ) : (
+          summaryStatus && (
           <a
             href={`https://www.youtube.com/watch?v=${youtubeId}`}
             target="_blank"
@@ -99,7 +100,7 @@ export default function GameRecap({ text, youtubeId, name }) {
           >
             ▶ Unavailable in your country
           </a>
-        )}
+        ))}
       </div>
       <div className='banner-ad'>Advertisement Placeholder</div>
 

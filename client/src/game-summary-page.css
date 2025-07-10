@@ -42,6 +42,6 @@
     @apply w-full h-10 bg-red-500 flex items-center justify-center font-bold cursor-pointer;
 }
 
-.video-container-outer, video-container:empty {
+.video-container-outer:empty, .video-container:empty {
     @apply hidden;
 }
