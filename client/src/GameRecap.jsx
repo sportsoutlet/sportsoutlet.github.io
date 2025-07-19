@@ -27,7 +27,10 @@ export default function GameRecap({ text, youtubeId, name, summaryStatus }) {
   
 
   useEffect(() => {
-    if (!youtubeId || !iframeContainerRef.current) return;
+    if (!youtubeId || !iframeContainerRef.current){
+      setVideoFailed(true);
+      return
+    };
 
     const loadYouTubeAPI = () => {
       return new Promise((resolve) => {

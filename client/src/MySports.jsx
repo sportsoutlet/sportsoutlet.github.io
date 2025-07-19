@@ -21,7 +21,7 @@ function MySports({ teams, setSettingTeam, setSport, setActiveTeam, setTeams, us
             <div className='my-sports py-3'>
                 <button className='flex items-center justify-center' onClick={(e) => {e.currentTarget.blur(); handleClick()}}><Plus /></button>
                 {teams.map((team, index) => (
-                    <button key={team.team} onClick={(e) => {e.currentTarget.blur(); setActiveTeam(team.team)}}>
+                    <button key={team.teamBack} onClick={(e) => {e.currentTarget.blur(); setActiveTeam(team)}}>
                         <span className='main text-lg font-bold pb-2'>{team.team}</span>
                         <span className='sub text-sm font-thick absolute left-3 top-3'>{team.sport}</span>
                         <span className='text-sm font-thin absolute bottom-2 opacity-80'>Click here for more information</span>
