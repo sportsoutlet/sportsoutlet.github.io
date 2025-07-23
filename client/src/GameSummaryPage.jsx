@@ -36,26 +36,7 @@ export default function GameSummaryPage({ activeTeam, name, setDisplaySummary, r
             <div className='summary'>
                 <BackButton className='absolute top-1 left-4 inline-flex items-center gap-2 px-3 py-2 rounded-md bg-neutral-800 text-white hover:bg-neutral-700 transition-colors max-w-fit' whenClicked={() => setDisplaySummary(false)} />
                 <h1>{title ? title : activeTeam.team + ' Recap'}</h1>
-                {loading ? <div className='flex items-center'><svg
-                    className="animate-spin h-6 w-6 mr-3 text-yellow-400"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                >
-                    <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                    ></circle>
-                    <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                    ></path>
-                </svg>
+                {loading ? <div className='flex items-center'>
                     <p className="text-md text-white opacity-75">Loading recap...</p>
                 </div> :
                     <GameRecap text={summary} youtubeId={youtubeId} name={name} summaryStatus={summaryStatus} />
