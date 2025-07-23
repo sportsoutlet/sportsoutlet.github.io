@@ -8,22 +8,8 @@ export default function GameRecap({ text, youtubeId, name, summaryStatus }) {
   const iframeContainerRef = useRef(null);
   const [videoFailed, setVideoFailed] = useState(false);
   const [videoErrorCode, setVideoErrorCode] = useState(null);
-  const [parts, setParts] = useState({ before: '', after: '' });
 
-  useEffect(() => {
-    const highlightWithPeriod = '%gamehighlight%.';
-    const highlight = '%gamehighlight%';
 
-    let processed;
-
-    if (text.includes(highlightWithPeriod)) {
-      processed = text.replace('%user%', name).split(highlightWithPeriod);
-    } else {
-      processed = text.replace('%user%', name).split(highlight);
-    }
-
-    setParts({ before: processed[0], after: processed[1] || '' });
-  }, [text, name]);
   
 
   useEffect(() => {
@@ -72,10 +58,10 @@ export default function GameRecap({ text, youtubeId, name, summaryStatus }) {
 
   return (
     <div className="max-w-full space-y-4 text-left response-wrapper">
-      {parts.before && (
+      {text && (
         <p
           className="max-w-full"
-          dangerouslySetInnerHTML={{ __html: parts.before }}
+          dangerouslySetInnerHTML={{ __html: text.replace('%user%', name) }}
         />
       )}
 
@@ -84,7 +70,7 @@ export default function GameRecap({ text, youtubeId, name, summaryStatus }) {
           <div className="relative w-full pb-[56.25%] mx-auto my-7 video-container-outer">
             <div className="video-container" ref={iframeContainerRef} />
           </div>
-        ) : videoErrorCode === 101 || videoErrorCode === 150 ? (
+        ) : videoErrorCode === 101 || videoErrorCode === 150 && (
           <a
             href={`https://www.youtube.com/watch?v=${youtubeId}`}
             target="_blank"
@@ -93,26 +79,10 @@ export default function GameRecap({ text, youtubeId, name, summaryStatus }) {
           >
             ▶ Watch on YouTube
           </a>
-        ) : (
-          summaryStatus && (
-          <a
-            href={`https://www.youtube.com/watch?v=${youtubeId}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 my-3 bg-neutral-600 !text-neutral-100 text-base font-medium rounded-full shadow hover:bg-neutral-700 hover:shadow-md transition duration-200"
-          >
-            ▶ Unavailable in your country
-          </a>
-        ))}
+        )}
       </div>
       <div className='banner-ad'>Advertisement Placeholder</div>
 
-      {parts.after && (
-        <p
-          className="max-w-full"
-          dangerouslySetInnerHTML={{ __html: parts.after }}
-        />
-      )}
       <div className='affiliates'>
         <a>Potential Merchandise Affiliate Link</a>
         <a>Potential Event Ticket Affiliate Link</a>

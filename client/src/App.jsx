@@ -6,6 +6,7 @@ import TeamSelect from './TeamSelect';
 import MySports from './MySports';
 import GameSummaryPage from './GameSummaryPage';
 import TeamInfo from './TeamInfo';
+import useGetLastGameRecap from './useGetLastGameRecap';
 
 // Utility to safely load from localStorage
 const safeLoad = (key, fallback) => {
@@ -31,6 +32,8 @@ function App() {
   const [teams, setTeams] = useState(() =>
     safeLoad('teams', [])
   );
+  
+  const [lastGameRecaps, setLastGameRecaps] = useState([]);
 
   const [settingTeam, setSettingTeam] = useState(() =>
     safeLoad('settingTeam', true)
@@ -59,6 +62,8 @@ function App() {
   }, [settingTeam]);
 
 
+  useGetLastGameRecap(teams, lastGameRecaps, setLastGameRecaps);
+
   return (
     <div className="w-[1280px] relative">
       {userInfo.name ? (
@@ -78,12 +83,15 @@ function App() {
                 name={userInfo.name}
                 setActiveTeam={setActiveTeam}
                 setDisplaySummary={setDisplaySummary}
+                recap={lastGameRecaps.find(recap => recap.teamName === activeTeam.teamBack) || 'failed to load recap'}
               />
             ) : (
               <TeamInfo 
               setDisplaySummary={setDisplaySummary}
               setActiveTeam={setActiveTeam}
               activeTeam={activeTeam}
+              recap={lastGameRecaps.find(recap => recap.teamName === activeTeam.teamBack) || 'failed to load recap'}
+              name={userInfo.name}
               />
             )
           ) : (
