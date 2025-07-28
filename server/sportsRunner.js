@@ -57,7 +57,7 @@ export default async function runRecapGenerator() {
             console.log(`✅ Recap saved for ${recap.teamName}: ${recap.title}`);
             await new Promise(resolve => setTimeout(resolve, 30000)); // wait 30s
           } else {
-            console.debug(`No recap generated for ${team.back}, skipping...`);
+            // console.debug(`No recap generated for ${team.back}, skipping...`);
             await new Promise(resolve => setTimeout(resolve, 10000)); // wait 10s - recap already exists
           }
 
