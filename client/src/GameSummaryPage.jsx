@@ -2,11 +2,26 @@ import { useEffect, useState } from 'react';
 import GameRecap from './GameRecap'; // adjust path if needed
 import './game-summary-page.css';
 import BackButton from './BackButton';
+import { useNavigate, Navigate } from 'react-router-dom';
+import { useAppContext } from './AppContext';
 
 
 
 
-export default function GameSummaryPage({ activeTeam, name, setDisplaySummary, recap }) {
+
+export default function GameSummaryPage() {
+
+    const { activeTeam, setDisplaySummary, userInfo, lastGameRecaps } = useAppContext();
+
+    if (!activeTeam || !lastGameRecaps) return <Navigate to="/myteams" />;
+
+
+    const name = userInfo.name || 'User';
+    const recap = lastGameRecaps.find(recap => recap.teamName === activeTeam.teamBack) || 'failed to load recap';
+
+
+    const navigate = useNavigate();
+
     const [summary, setSummary] = useState('');
     const [youtubeId, setYoutubeId] = useState();
     const [loading, setLoading] = useState(true);
@@ -18,7 +33,6 @@ export default function GameSummaryPage({ activeTeam, name, setDisplaySummary, r
         setTitle(recap.summaryTitle || 'Game Recap');
         setSummary(recap.summary || 'No summary available.');
         setSummaryStatus(true);
-        console.log(recap.summary);
 
         // 🔍 Extract YouTube ID if link is known (optional)
         // e.g., if your server adds `videoUrl: "https://www.youtube.com/watch?v=XYZ"`
@@ -34,7 +48,7 @@ export default function GameSummaryPage({ activeTeam, name, setDisplaySummary, r
     return (
         <div className='summary-wrapper mt-12'>
             <div className='summary'>
-                <BackButton className='absolute top-1 left-4 inline-flex items-center gap-2 px-3 py-2 rounded-md bg-neutral-800 text-white hover:bg-neutral-700 transition-colors max-w-fit' whenClicked={() => setDisplaySummary(false)} />
+                <BackButton className='absolute top-1 left-4 inline-flex items-center gap-2 px-3 py-2 rounded-md bg-neutral-800 text-white hover:bg-neutral-700 transition-colors max-w-fit' whenClicked={() => { setDisplaySummary(false); navigate(`/myteams/team/${activeTeam.teamBack}`) }} />
                 <h1>{title ? title : activeTeam.team + ' Recap'}</h1>
                 {loading ? <div className='flex items-center'>
                     <p className="text-md text-white opacity-75">Loading recap...</p>

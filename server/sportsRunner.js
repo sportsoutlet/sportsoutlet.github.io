@@ -1,6 +1,8 @@
 import { saveRecap } from './saveRecap.js';
 import generateRecap from './generateRecap.js';
 import { sports } from './sports.js'
+import { exec } from 'child_process';
+
 
 
 
@@ -36,6 +38,8 @@ function discrepancyCalculator(str1, str2) {
 }
 
 
+let lastPush = Date.now();
+const minInterval = 60 * 1000 * 2; // 2 minute
 
 export default async function runRecapGenerator() {
   while (true) {
@@ -46,15 +50,28 @@ export default async function runRecapGenerator() {
           if (recap && recap.id) {
             saveRecap(recap);
             const discrepancy = discrepancyCalculator(team.back, recap.teamName);
-            if(discrepancy !== '0.00%') {
+            if (discrepancy !== '0.00%') {
               console.log('\x1b[31m%s\x1b[0m', `⚠️ Discrepancy detected for ${team.back}: ${discrepancy}`);
               console.log(`${team.back} compared to ${recap.teamName}`);
             }
             console.log(`✅ Recap saved for ${recap.teamName}: ${recap.title}`);
             await new Promise(resolve => setTimeout(resolve, 30000)); // wait 30s
           } else {
+            console.debug(`No recap generated for ${team.back}, skipping...`);
             await new Promise(resolve => setTimeout(resolve, 10000)); // wait 10s - recap already exists
           }
+
+          if (Date.now() - lastPush > minInterval) {
+            lastPush = Date.now();
+            exec('node ./pushDbIfChanged.js', (err, stdout, stderr) => {
+              if (err) {
+                console.error('Push script error:', err.message);
+                return;
+              }
+              if (stderr) console.error(stderr);
+            });
+          }
+
         } catch (err) {
           console.error(`💥 Error with team ${team.back}:`, err.message);
           await new Promise(resolve => setTimeout(resolve, 10000)); // backoff on error
@@ -62,7 +79,7 @@ export default async function runRecapGenerator() {
       }
     }
 
-    console.log('🔁 Finished full cycle of all teams. Restarting in 1 minute...');
+    // console.log('🔁 Finished full cycle of all teams. Restarting in 1 minute...');
     await new Promise(resolve => setTimeout(resolve, 1 * 60 * 1000)); // wait 5 min between cycles
   }
 }

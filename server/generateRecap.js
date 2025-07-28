@@ -1,6 +1,6 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
-import { recapExists } from './saveRecap.js';
+import { recapExists, updateVideoUrl } from './saveRecap.js';
 dotenv.config(); // load environment variables
 
 
@@ -115,6 +115,12 @@ async function generateRecap(team, sportParam) {
 
         if (recapExists(`${teamName} ${lastGame.idEvent}`)) {
             // console.log(`⚠️ Recap already exists for ${teamName} on ${lastGame.dateEvent} ... id: ${lastGame.idEvent}`);
+            const recapData = recapExists(`${teamName} ${lastGame.idEvent}`, true);
+            if(!recapData.videoUrl && lastGame.strVideo ) {
+                console.log(`Recap already exists for ${teamName} but new video found, regenerating...`);
+                updateVideoUrl(`${teamName} ${lastGame.idEvent}`, lastGame.strVideo);
+            } 
+
             return null;
         }
 

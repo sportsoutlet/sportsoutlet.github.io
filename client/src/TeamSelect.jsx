@@ -1,8 +1,16 @@
 import { sports } from './sports.js'
 import './team-select.css'
 import BackButton from './BackButton.jsx'
+import { useNavigate } from 'react-router-dom';
+import { useAppContext } from './AppContext';
 
-function TeamSelect({ sport, setTeams, setSettingTeam, teams, setSport }) {
+
+
+function TeamSelect() {
+
+    const { sport, setTeams, setSettingTeam, teams, setSport } = useAppContext();
+
+    const navigate = useNavigate();
 
     function handleClick(team) {
         setTeams((prev) => [
@@ -14,6 +22,7 @@ function TeamSelect({ sport, setTeams, setSettingTeam, teams, setSport }) {
             }
         ]);
         setSettingTeam(false);
+        navigate('/myteams');
     }
 
     return (
@@ -33,7 +42,7 @@ function TeamSelect({ sport, setTeams, setSettingTeam, teams, setSport }) {
             </div>
             <BackButton
                 className='absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-2 rounded-md bg-neutral-800 text-white hover:bg-neutral-700 transition-colors max-w-fit'
-                whenClicked={() => setSport()}
+                whenClicked={() => {setSport(); navigate('/myteams/sports');}}
             />
         </div>
     );

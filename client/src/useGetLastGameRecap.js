@@ -1,6 +1,7 @@
 import { use, useEffect, useRef } from 'react';
 
-
+// const serverApiUrl = 'http://localhost:3000';
+const serverApiUrl = 'https://sports-api-o71j.onrender.com';
 
 function extractTaggedSections(str) {
     const regex = /%=(.*?)=%/g;
@@ -32,8 +33,7 @@ function useGetLastGameRecap(teams, recaps, setRecaps) {
         try {
             if (bypassRepeatCheck) {
                 var hasRecap = recapsRef.current.some(recap => recap.teamName === team);
-                // const res = await fetch(`http://localhost:3000/game-summary?team=${team}`);
-                const res = await fetch(`https://sports-api-o71j.onrender.com/game-summary?team=${team}`);
+                const res = await fetch(`${serverApiUrl}/game-summary?team=${team}`);
                 const data = await res.json();
 
                 if (data?.summary) {
@@ -58,8 +58,7 @@ function useGetLastGameRecap(teams, recaps, setRecaps) {
             } else {
                 var hasRecap = recapsRef.current.some(recap => recap.teamName === team);
                 if (!hasRecap) {
-                    const res = await fetch(`https://sports-api-o71j.onrender.com/game-summary?team=${team}`);
-                    // const res = await fetch(`http://localhost:3000/game-summary?team=${team}`);
+                     const res = await fetch(`${serverApiUrl}/game-summary?team=${team}`);
                     const data = await res.json();
 
                     if (data?.summary) {

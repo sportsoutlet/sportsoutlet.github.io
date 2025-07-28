@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import './App.css';
 import RegisterForm from './RegisterForm';
 import SportSelect from './SportSelect';
@@ -7,112 +8,80 @@ import MySports from './MySports';
 import GameSummaryPage from './GameSummaryPage';
 import TeamInfo from './TeamInfo';
 import useGetLastGameRecap from './useGetLastGameRecap';
+import { AppProvider, useAppContext } from './AppContext';
+
 
 // Utility to safely load from localStorage
-const safeLoad = (key, fallback) => {
-  const raw = localStorage.getItem(key);
-  if (!raw || raw === 'null' || raw === 'undefined') return fallback;
 
-  try {
-    return JSON.parse(raw);
-  } catch {
-    return raw; // for string-only values like 'sport'
-  }
-};
+
+
+function AppWrapper() {
+  return (
+    <AppProvider>
+      <Router>
+        <App />
+      </Router>
+    </AppProvider>
+  );
+}
+
+
 
 function App() {
-  const [userInfo, setUserInfo] = useState(() =>
-    safeLoad('userInfo', { name: '', age: '', gender: '', country: '' })
-  );
 
-  const [sport, setSport] = useState(() =>
-    safeLoad('sport', '')
-  );
+  const {teams, lastGameRecaps, setLastGameRecaps } = useAppContext();
 
-  const [teams, setTeams] = useState(() =>
-    safeLoad('teams', [])
-  );
-  
-  const [lastGameRecaps, setLastGameRecaps] = useState([]);
+  const navigate = useNavigate();
 
-  const [settingTeam, setSettingTeam] = useState(() =>
-    safeLoad('settingTeam', true)
-  );
-
-  const [activeTeam, setActiveTeam] = useState();
-
-  const [displaySummary, setDisplaySummary] = useState(false);
-
-  // Save to localStorage safely
-  useEffect(() => {
-    localStorage.setItem('userInfo', JSON.stringify(userInfo));
-  }, [userInfo]);
 
   useEffect(() => {
-    if (sport) localStorage.setItem('sport', sport);
-    else localStorage.removeItem('sport');
-  }, [sport]);
-
-  useEffect(() => {
-    localStorage.setItem('teams', JSON.stringify(teams));
-  }, [teams]);
-
-  useEffect(() => {
-    localStorage.setItem('settingTeam', JSON.stringify(settingTeam));
-  }, [settingTeam]);
+    const saved = localStorage.getItem('userInfo');
+    if (saved && saved !== 'null' && saved !== 'undefined' && JSON.parse(saved).name) {
+      navigate('/myteams');
+    }
+  }, []);
 
 
   useGetLastGameRecap(teams, lastGameRecaps, setLastGameRecaps);
 
   return (
     <div className="w-[1280px] relative">
-      {userInfo.name ? (
-        sport ? (
-          settingTeam ? (
-            <TeamSelect
-              sport={sport}
-              setSettingTeam={setSettingTeam}
-              setTeams={setTeams}
-              teams={teams}
-              setSport={setSport}
-            />
-          ) : activeTeam ? (
-            displaySummary ? (
-              <GameSummaryPage
-                activeTeam={activeTeam}
-                name={userInfo.name}
-                setActiveTeam={setActiveTeam}
-                setDisplaySummary={setDisplaySummary}
-                recap={lastGameRecaps.find(recap => recap.teamName === activeTeam.teamBack) || 'failed to load recap'}
-              />
-            ) : (
-              <TeamInfo 
-              setDisplaySummary={setDisplaySummary}
-              setActiveTeam={setActiveTeam}
-              activeTeam={activeTeam}
-              recap={lastGameRecaps.find(recap => recap.teamName === activeTeam.teamBack) || 'failed to load recap'}
-              name={userInfo.name}
-              />
-            )
-          ) : (
-            <MySports
-              teams={teams}
-              setSettingTeam={setSettingTeam}
-              setSport={setSport}
-              setActiveTeam={setActiveTeam}
-              setTeams={setTeams}
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
-            />
-          )
-        ) : (
-          <SportSelect setSport={setSport} />
-        )
-      ) : (
-        <RegisterForm setInfo={setUserInfo} info={userInfo} title='Register' />
-      )}
+
+      <Routes>
+
+        <Route path="/" element={
+          <RegisterForm title='Register' />
+        } />
+
+
+        <Route path="/myteams" element={
+          <MySports/>
+        } />
+
+
+        <Route path="/myteams/sports" element={
+          <SportSelect/>
+        } />
+
+
+        <Route path="/myteams/teams" element={
+          <TeamSelect/>
+        } />
+
+        <Route path="/myteams/team/:teamId" element={
+          <TeamInfo/>
+        } />
+
+
+        <Route path="/myteams/team/:teamId/summary" element={
+          <GameSummaryPage/>
+        } />
+
+        <Route path="*" element={<Navigate to="/myteams" />} />
+
+      </Routes>
     </div>
   );
 }
 
-export default App;
+export default AppWrapper;

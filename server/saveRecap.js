@@ -65,8 +65,18 @@ export function saveRecap(result) {
   insert.run({ ...result, finished: result.finished ? 1 : 0 });
 }
 
-export function recapExists(id) {
-  const row = db.prepare('SELECT 1 FROM recaps WHERE id = ?').get(id);
-  return !!row;
+export function recapExists(id, getRow = false) {
+  const row = getRow
+    ? db.prepare('SELECT * FROM recaps WHERE id = ?').get(id)
+    : db.prepare('SELECT 1 FROM recaps WHERE id = ?').get(id);
+
+  return getRow ? row : !!row;
 }
 
+export function updateVideoUrl(id, newUrl) {
+  const stmt = db.prepare('UPDATE recaps SET videoUrl = ? WHERE id = ?');
+  const result = stmt.run(newUrl, id);
+  if( result.changes > 0){
+    // console.log(`✅ Updated video URL for recap ${id}`);
+  } // true if a row was updated
+}
