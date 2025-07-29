@@ -69,6 +69,7 @@ export default async function runRecapGenerator() {
                 return;
               }
               if (stderr) console.error(stderr);
+              if (stdout) console.log(stdout);
             });
           }
 

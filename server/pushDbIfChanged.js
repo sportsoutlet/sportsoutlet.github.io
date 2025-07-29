@@ -2,6 +2,13 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import process from 'process';
+import crypto from 'crypto';
+
+function hash(content) {
+  return crypto.createHash('sha256').update(content).digest('hex');
+}
+
+
 const fetch = global.fetch;
 
 // ✅ Setup __dirname
@@ -32,15 +39,29 @@ async function uploadFileToGitHub() {
     // Check if the file exists on GitHub (to get the SHA for updates)
     const getUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${DEST_PATH}`;
     let sha = null;
+    let remoteContent = null;
 
     try {
       const getRes = await fetch(getUrl, { headers });
       if (getRes.ok) {
         const getData = await getRes.json();
         sha = getData.sha;
+        remoteContent = getData.content.replace(/\n/g, '').trim(); // ✅ remove all newlines
       }
     } catch (err) {
       console.log('🔍 Could not fetch existing file SHA:', err.message);
+    }
+
+    // Read and encode local content
+    const localContent = fs.readFileSync(dbPath, { encoding: 'base64' });
+
+    // ✅ Compare local and remote content
+    console.log('Remote hash:', hash(remoteContent));
+    console.log('Local hash: ', hash(localContent));
+
+    if (remoteContent && localContent === remoteContent) {
+      console.log('🟡 No changes detected, skipping upload.');
+      return;
     }
 
     // Upload (create or update)
