@@ -38,6 +38,10 @@ try {
 
   if (dbChanged) {
     console.log('📦 Changes detected in recaps.db. Committing and pushing...');
+
+    execSync('git config user.email "render@yourbot.com"');
+    execSync('git config user.name "Render Auto Commit Bot"');
+
     execSync(`git add ${dbPath}`);
     execSync(`git commit -m "Auto-update ${dbPath} on ${new Date().toISOString()}"`);
     execSync('git push origin main');
