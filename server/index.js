@@ -8,7 +8,7 @@ import fs from 'fs';
 import https from 'https';
 
 const url = 'https://raw.githubusercontent.com/sportsoutlet/sportsoutlet.github.io/main/server/recaps.db';
-const dest = 'server/recaps.db';
+const dest = 'recaps.db';
 
 function downloadDBFile(url, dest, cb) {
   const file = fs.createWriteStream(dest);
