@@ -1,17 +1,22 @@
-import { execSync } from 'child_process';
+import { fileURLToPath } from 'url';
 import path from 'path';
+import { execSync } from 'child_process';
 import process from 'process';
 
-// Go to root where .git is
-const projectRoot = path.resolve(__dirname, '..'); // parent of /server
-const dbPath = 'server/recaps.db'; // ✅ relative path from root
+// ✅ ES module replacement for __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// move one level up from /server to root
+const projectRoot = path.resolve(__dirname, '..');
+const dbPath = 'server/recaps.db';
 
 const remoteUrl = `https://${process.env.GITHUB_TOKEN}@github.com/sportsoutlet/sportsoutlet.github.io.git`;
 
 try {
-  process.chdir(projectRoot); // move to project root
+  process.chdir(projectRoot); // ✅ change to root dir with .git
 
-  // Ensure we’re in a Git repo
+  // Check if repo is initialized
   try {
     execSync('git rev-parse --is-inside-work-tree', { stdio: 'ignore' });
   } catch {
@@ -20,14 +25,14 @@ try {
     execSync('git branch -m main');
   }
 
-  // Ensure 'origin' exists
+  // Check or add remote
   const remotes = execSync('git remote').toString();
   if (!remotes.includes('origin')) {
     console.log('🔗 Adding origin remote...');
     execSync(`git remote add origin ${remoteUrl}`);
   }
 
-  // Check if recaps.db has changed
+  // Check if recaps.db changed
   const statusOutput = execSync('git status --porcelain').toString();
   const dbChanged = statusOutput.split('\n').some(line => line.includes(dbPath));
 
