@@ -35,10 +35,6 @@ export default function EditProfile({ userInfo, setUserInfo }) {
                     className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center"
                     onClick={() => setShowModal(false)} // ✅ clicking background closes modal
                 >
-                    <div
-                        className="bg-neutral-900 rounded-xl p-6 w-[90%] max-w-md text-white relative animate-fade-in shadow-lg"
-                        onClick={(e) => e.stopPropagation()} // 🛑 prevent click inside modal from closing it
-                    >
                         <RegisterForm
                             setInfo={setUserInfo}
                             info={userInfo}
@@ -53,7 +49,6 @@ export default function EditProfile({ userInfo, setUserInfo }) {
                             </button>
                         </RegisterForm>
                     </div>
-                </div>
             )}
         </div>
     );

@@ -62,8 +62,7 @@ function RegisterForm({ children, title, onSubmit = () => { } }) {
   }
 
   return (
-    <div className="register-form">
-      <div className="common-form-wrapper relative">
+      <div className="common-form-wrapper relative flex flex-col" onClick={(e) => e.stopPropagation()}>
         {children}
         <h1>{title}</h1>
         <form className="common-form" onSubmit={handleSubmit}>
@@ -128,7 +127,6 @@ function RegisterForm({ children, title, onSubmit = () => { } }) {
           <button onClick={(e) => { e.currentTarget.blur(); }} type="submit">Submit</button>
         </form>
       </div>
-    </div>
   );
 }
 
