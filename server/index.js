@@ -4,6 +4,31 @@ import runRecapGenerator from './sportsRunner.js';
 import gameSummary from './endpoints/game-summary.js';
 import dotenv from 'dotenv';
 dotenv.config();
+import fs from 'fs';
+import https from 'https';
+
+const url = 'https://raw.githubusercontent.com/sportsoutlet/sportsoutlet.github.io/main/server/recaps.db';
+const dest = 'server/recaps.db';
+
+function downloadDBFile(url, dest, cb) {
+  const file = fs.createWriteStream(dest);
+  https.get(url, (res) => {
+    if (res.statusCode === 200) {
+      res.pipe(file);
+      file.on('finish', () => {
+        file.close(cb);
+      });
+    } else {
+      cb(new Error(`Failed to download DB file. Status: ${res.statusCode}`));
+    }
+  }).on('error', cb);
+}
+
+downloadDBFile(url, dest, (err) => {
+  if (err) console.error('❌ Failed to fetch latest DB:', err.message);
+  else console.log('✅ Pulled latest recaps.db from GitHub');
+});
+
 
 const app = express();
 const allowedOrigin = 'https://gaboai.com';
