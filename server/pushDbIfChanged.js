@@ -56,11 +56,9 @@ async function uploadFileToGitHub() {
     const localContent = fs.readFileSync(dbPath, { encoding: 'base64' });
 
     // ✅ Compare local and remote content
-    console.log('Remote hash:', hash(remoteContent));
-    console.log('Local hash: ', hash(localContent));
 
     if (remoteContent && localContent === remoteContent) {
-      console.log('🟡 No changes detected, skipping upload.');
+      // console.log('🟡 No changes detected, skipping upload.');
       return;
     }
 
