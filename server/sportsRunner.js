@@ -4,7 +4,9 @@ import { sports } from './sports.js'
 import { exec } from 'child_process';
 
 
-
+const successFulRecapTimeout = 1000 * 60 * 1; // 1 minute
+const unsuccessFulRecapTimeout = 1000 * 60 * 1; // 30 seconds
+const errorTimeout = 1000 * 60 * 1; // 5 minutes
 
 
 
@@ -55,10 +57,10 @@ export default async function runRecapGenerator() {
               console.log(`${team.back} compared to ${recap.teamName}`);
             }
             console.log(`✅ Recap saved for ${recap.teamName}: ${recap.title}`);
-            await new Promise(resolve => setTimeout(resolve, 30000)); // wait 30s
+            await new Promise(resolve => setTimeout(resolve, successFulRecapTimeout));
           } else {
             // console.debug(`No recap generated for ${team.back}, skipping...`);
-            await new Promise(resolve => setTimeout(resolve, 10000)); // wait 10s - recap already exists
+            await new Promise(resolve => setTimeout(resolve, unsuccessFulRecapTimeout));
           }
 
           if (Date.now() - lastPush > minInterval) {
@@ -75,7 +77,7 @@ export default async function runRecapGenerator() {
 
         } catch (err) {
           console.error(`💥 Error with team ${team.back}:`, err.message);
-          await new Promise(resolve => setTimeout(resolve, 10000)); // backoff on error
+          await new Promise(resolve => setTimeout(resolve, errorTimeout)); // backoff on error
         }
       }
     }
