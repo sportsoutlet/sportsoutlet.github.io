@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import runRecapGenerator from './sportsRunner.js';
 import gameSummary from './endpoints/game-summary.js';
+import latestRecaps from './endpoints/latest-recaps.js';
 import dotenv from 'dotenv';
 dotenv.config();
 import fs from 'fs';
@@ -65,6 +66,16 @@ app.get('/game-summary', async (req, res) => {
 
     res.json(gameSummary(team));
 
+  } catch (error) {
+    console.error("❌ Error:", error.response?.data || error.message);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
+app.get('/latest-recaps', async (_req, res) => {
+  try {
+    res.json(latestRecaps());
   } catch (error) {
     console.error("❌ Error:", error.response?.data || error.message);
     res.status(500).json({ error: 'Server error' });

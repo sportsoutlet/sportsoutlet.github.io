@@ -1,6 +1,5 @@
 import './my-sports.css'
 import { Plus, X } from 'lucide-react';
-import EditProfile from './EditProfile';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from './AppContext';
 
@@ -9,7 +8,7 @@ import { useAppContext } from './AppContext';
 
 function MySports() {
 
-    const { teams, setSettingTeam, setSport, setActiveTeam, setTeams, userInfo, setUserInfo } = useAppContext();
+    const { teams, setSettingTeam, setSport, setActiveTeam, setTeams } = useAppContext();
 
     const navigate = useNavigate();
 
@@ -28,7 +27,6 @@ function MySports() {
     return (
         <div className='my-sports-wrapper'>
             <h1 className='pt-10'>Your Teams:</h1>
-            <EditProfile userInfo={userInfo} setUserInfo={setUserInfo} />
             <div className='my-sports py-3'>
                 <button className='flex items-center justify-center' onClick={(e) => {e.currentTarget.blur(); handleClick()}}><Plus /></button>
                 {teams.map((team, index) => (

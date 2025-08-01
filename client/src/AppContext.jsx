@@ -23,13 +23,7 @@ export function AppProvider({ children }) {
     }
   });
 
-  const [settingTeam, setSettingTeam] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem('settingTeam')) ?? true;
-    } catch {
-      return true;
-    }
-  });
+  const [settingTeam, setSettingTeam] = useState(false);
 
   const [activeTeam, setActiveTeam] = useState(null);
 
@@ -51,9 +45,6 @@ export function AppProvider({ children }) {
     localStorage.setItem('teams', JSON.stringify(teams));
   }, [teams]);
 
-  useEffect(() => {
-    localStorage.setItem('settingTeam', JSON.stringify(settingTeam));
-  }, [settingTeam]);
 
   const value = {
     userInfo,

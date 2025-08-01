@@ -1,0 +1,9 @@
+@reference "./index.css";
+
+.good-shadow {
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.171);
+}
+
+.strong-shadow {
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.315);
+}

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { UserCog, X } from 'lucide-react';
 import RegisterForm from './RegisterForm';
 
-export default function EditProfile({ userInfo, setUserInfo }) {
+export default function EditProfile({ userInfo, setUserInfo, ...props }) {
     const [showModal, setShowModal] = useState(false);
     const [form, setForm] = useState(userInfo);
 
@@ -18,11 +18,11 @@ export default function EditProfile({ userInfo, setUserInfo }) {
     };
 
     return (
-        <div>
+        <div className="edit-profile" {...props}>
             {/* Edit Button */}
             <button
                 onClick={() => setShowModal(true)}
-                className="flex items-center gap-2 text-white/70 hover:text-white transition px-2 py-1 rounded absolute top-1 right-1 max-w-fit"
+                className="flex items-center gap-2 text-white/70 hover:text-white transition px-2 py-1 rounded max-w-fit"
                 title="Edit Profile"
             >
                 <UserCog size={18} />

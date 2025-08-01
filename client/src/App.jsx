@@ -9,6 +9,8 @@ import GameSummaryPage from './GameSummaryPage';
 import TeamInfo from './TeamInfo';
 import useGetLastGameRecap from './useGetLastGameRecap';
 import { AppProvider, useAppContext } from './AppContext';
+import Header from './Header';
+import Featured from './Featured';
 
 
 // Utility to safely load from localStorage
@@ -29,7 +31,7 @@ function AppWrapper() {
 
 function App() {
 
-  const {teams, lastGameRecaps, setLastGameRecaps } = useAppContext();
+  const { teams, lastGameRecaps, setLastGameRecaps } = useAppContext();
 
   const navigate = useNavigate();
 
@@ -46,40 +48,22 @@ function App() {
 
   return (
     <div className="w-[1280px] relative">
+      <Header />
+      <div className='flex flex-col items-center p-3'>
+        <Routes>
 
-      <Routes>
+          <Route path="/" element={<RegisterForm title='Register' />} />
+          <Route path="/myteams" element={<MySports />} />
+          <Route path="/myteams/sports" element={<SportSelect />} />
+          <Route path="/myteams/teams" element={<TeamSelect />} />
+          <Route path="/myteams/team/:teamId" element={<TeamInfo />} />
+          <Route path="/myteams/team/:teamId/summary" element={<GameSummaryPage />} />
+          <Route path="/featured" element={<Featured />} />
 
-        <Route path="/" element={
-          <RegisterForm title='Register' />
-        } />
+          <Route path="*" element={<Navigate to="/myteams" />} />
 
-
-        <Route path="/myteams" element={
-          <MySports/>
-        } />
-
-
-        <Route path="/myteams/sports" element={
-          <SportSelect/>
-        } />
-
-
-        <Route path="/myteams/teams" element={
-          <TeamSelect/>
-        } />
-
-        <Route path="/myteams/team/:teamId" element={
-          <TeamInfo/>
-        } />
-
-
-        <Route path="/myteams/team/:teamId/summary" element={
-          <GameSummaryPage/>
-        } />
-
-        <Route path="*" element={<Navigate to="/myteams" />} />
-
-      </Routes>
+        </Routes>
+      </div>
     </div>
   );
 }
