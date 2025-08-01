@@ -8,7 +8,7 @@ function Featured() {
     async function fetchLast10Recaps() {
         try {
             // const res = await fetch('http://localhost:3000/latest-recaps');
-            const res = await fetch('https://sports-api-o71j.onrender.com');
+            const res = await fetch('https://sports-api-o71j.onrender.com/latest-recaps');
             const data = await res.json();
             console.log(data);
             setFeaturedGames(data);
